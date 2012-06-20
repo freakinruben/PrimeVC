@@ -132,6 +132,7 @@ class VideoStream extends BaseMediaStream
 	//	source.client = null;		//gives error "Invalid parameter flash.net::NetStream/set client()"
 		if (isInitialized())
 		{
+			(untyped state).current = MediaStates.empty;
 			source.dispose();
 			connection.dispose();
 			connection	= null;

@@ -11,7 +11,7 @@
 #-D DebugEvents
 --flash-strict
 
--swf-version 10
+-swf-version 10.3
 -swf-header 1000:750:24:FFFFFF
 #-swf bin-debug/app.swf
 

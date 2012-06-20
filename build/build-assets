@@ -106,7 +106,7 @@ else
 			-show-deprecation-warnings \
 			-warn-class-is-sealed \
 			-tools-locale=en \
-			-target-player="10.0.0" \
+			-target-player="10.3.0" \
 		 	-output "'$DEBUG_OUTPUT_FILE'" \
 		 	"'$DEBUG_INPUT_FILE'" \
 			| xargs -t "$MXMLC" \
@@ -120,7 +120,7 @@ else
 			-optimize \
 			-strict \
 			-tools-locale=en \
-			-target-player="10.0.0" \
+			-target-player="10.3.0" \
 			-output "'$RELEASE_OUTPUT_FILE'" \
 			"'$RELEASE_INPUT_FILE'" \
 			| xargs -t "$MXMLC" \

@@ -47,7 +47,7 @@ CompilerUpdated=false
 #create parser if the source files have changed
 if $Force || [[ ! -f "$Parser" ]]  ||  test "$MainFile" -nt "$Parser"  ||  test "$ParserClass" -nt "$Parser"; then  # ||  test ${StyleFile} -nt ${Parser} ; then
 	echo -e "\tCompiling parser"
-	haxe build/build-cssparser.hxml \
+	haxe "$PRIMEVC_ROOT/build/build-cssparser.hxml" \
 		-main $MainClass \
 		-js "$Parser" \
 		$Debug \
