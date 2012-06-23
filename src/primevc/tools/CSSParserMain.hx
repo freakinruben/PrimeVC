@@ -45,8 +45,8 @@ package primevc.tools;
 class CSSParserMain
 {
 	public static inline function print(v:String)
-		#if nodejs 	js.Lib.print(v)
-		#else 		neko.Lib.print(v+"\n") #end
+		#if js 	untyped console.log(v)
+		#else	neko.Lib.print(v+"\n") #end
 
 	/**
 	 * This script needs one parameter to run: the location of the skin folder
@@ -113,9 +113,9 @@ class CSSParserMain
 	//	print(Date.now() + " Generating code");
 		
 		generator.start();
-		if (styles.has( StyleFlags.ELEMENT_CHILDREN ))			generateSelectorCode( cast styles.elementChildren, "elementChildren" );
-		if (styles.has( StyleFlags.STYLE_NAME_CHILDREN ))		generateSelectorCode( cast styles.styleNameChildren, "styleNameChildren" );
-		if (styles.has( StyleFlags.ID_CHILDREN ))				generateSelectorCode( cast styles.idChildren, "idChildren" );
+		if (styles.has( StyleFlags.ELEMENT_CHILDREN ))			generateSelectorCode( styles.elementChildren, "elementChildren" );
+		if (styles.has( StyleFlags.STYLE_NAME_CHILDREN ))		generateSelectorCode( styles.styleNameChildren, "styleNameChildren" );
+		if (styles.has( StyleFlags.ID_CHILDREN ))				generateSelectorCode( styles.idChildren, "idChildren" );
 		
 		//write to template
 		setTemplateVar( "imports",   generator.imports.writeImports() );
@@ -157,7 +157,7 @@ class CSSParserMain
 	
 	
 	
-	private function generateSelectorCode (selectorHash:Hash<ICodeFormattable>, name:String) : Void
+	private function generateSelectorCode (selectorHash : {function get(str:String):ICodeFormattable; function keys(): Iterator<String>;}, name:String) : Void
 	{
 		Assert.notNull(selectorHash);
 		beginTimer();

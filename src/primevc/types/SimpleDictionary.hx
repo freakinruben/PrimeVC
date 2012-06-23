@@ -142,7 +142,7 @@ class SimpleDictionary < KType, VType >
 	
 	
 	public inline function iterator ()				: Iterator < VType >	{ return new FastArrayForwardIterator < VType > ( _values ); }
-	public inline function isEmpty ()				: Bool					{ return _values.length == 0; }
+	public        function isEmpty ()				: Bool					{ return _values.length == 0; }
 	private inline function getLength ()			: Int					{ return _values.length; }
 	public inline function exists (key:KType)		: Bool					{ return _keys.indexOf( key ) > -1; }
 	public inline function hasValue (value:VType)	: Bool					{ return _values.indexOf( value ) > -1; }

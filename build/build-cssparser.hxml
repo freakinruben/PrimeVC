@@ -1,3 +1,5 @@
+--js-modern
+-debug
 -lib nodejs
 -D CSSParser
 #-lib listtools
