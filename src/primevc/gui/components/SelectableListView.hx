@@ -100,7 +100,7 @@ class SelectableListView<ListDataType> extends ListView<ListDataType>
         invalidateSelection.on( selected.change, this );
 
         if (selected.value.notNull() && focusIndex == -1)
-            focusRendererAt(data.indexOf(selected.value));
+            focusRendererOf(selected.value);
     }
     
     
@@ -175,7 +175,7 @@ class SelectableListView<ListDataType> extends ListView<ListDataType>
         }
         
         if (changes.has(CURRENT_FOCUS) && focusIndex > -1)
-            focusRendererAt(focusIndex);
+            focusRendererOf(data.getItemAt(focusIndex));
     }
 
 
@@ -221,28 +221,23 @@ class SelectableListView<ListDataType> extends ListView<ListDataType>
             focusIndex       = depthToIndex( children.indexOf(child) );
         }
     }
-    
-    
-    public function focusRendererAt (index:Int)
-    {
-        if (focusIndex != index || currentFocus.isNull())
-        {
-            Assert.that(index > -1);
-            focusIndex   = index;
-            currentFocus = getRendererAt( indexToDepth(index) );
 
-            if (currentFocus.notNull())
-            {
-                if (isOnStage() && currentFocus.is(IInteractiveObject))
-                    window.focus = currentFocus.as(IInteractiveObject);
-                
-                layoutContainer.scrollTo(currentFocus.layout);
-            }
-            else
-            {
-                layoutContainer.scrollToDepth(index);
-                invalidate( CURRENT_FOCUS );
-            }
+
+    public function focusRendererOf (item:ListDataType)
+    {
+        var r = getRendererFor(item);
+        if (r.isNull()) {
+            layoutContainer.scrollToDepth(data.indexOf(item));
+            invalidate( CURRENT_FOCUS );
+        }
+        else if (r != currentFocus)
+        {
+            currentFocus = r;
+            focusIndex = data.indexOf(item);
+            if (isOnStage() && r.is(IInteractiveObject))
+                window.focus = r.as(IInteractiveObject);
+            
+            layoutContainer.scrollTo(r.layout);
         }
     }
     
