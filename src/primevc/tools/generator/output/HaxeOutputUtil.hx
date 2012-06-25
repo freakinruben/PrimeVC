@@ -184,7 +184,7 @@ class HaxeOutputUtil
 		var a			= doc.add;
 		v.instName		= v.className.toVarName();
 		
-		doc.addLine( "var " + v.instName + " = " + value );
+		doc.addLine( "var " + v.instName + " = " + value.toString() );
 		return v.instName;
 	}
 	
