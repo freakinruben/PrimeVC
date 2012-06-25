@@ -1,6 +1,9 @@
 #--js-modern
 #-debug
--lib nodejs
+#-lib nodejs
+-D nodejs
+-cp libs/nodejs
+
 -D CSSParser
 #-lib listtools
 -cp libs/haxe
