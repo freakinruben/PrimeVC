@@ -40,7 +40,7 @@ package primevc.gui.effects;
  * @author Ruben Weijers
  * @creation-date Aug 31, 2010
  */
-class ScaleEffect extends Effect<primevc.gui.traits.IScaleable, ScaleEffect>
+class ScaleEffect extends Effect<primevc.gui.display.IDisplayObject, ScaleEffect>
 {
 	/**
 	 * Explicit scaleX value. By setting this value, the effect will ignore 
