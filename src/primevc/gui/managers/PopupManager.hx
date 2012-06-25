@@ -43,7 +43,7 @@ package primevc.gui.managers;
 class PopupManager implements IPopupManager 
 {
 	private var window	: UIWindow;
-	private var modal	: UIComponent;	//can't be a UIGraphic since it needs to block mouse clicks
+	public  var modal	(default, null) : UIComponent;	//can't be a UIGraphic since it needs to block mouse clicks
 	
 	/**
 	 * List of all popups who also want a modal. If a new popup is opened above

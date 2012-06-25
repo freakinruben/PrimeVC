@@ -46,7 +46,7 @@ interface IPopupManager implements IDisposable
 	 * active popup is first closed before anything else is done in the 
 	 * application.
 	 */
-	private var modal	: UIComponent;
+	public var modal	(default, null) : UIComponent;
 	
 	
 	/**
