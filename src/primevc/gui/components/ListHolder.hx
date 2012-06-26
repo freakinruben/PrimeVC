@@ -111,12 +111,12 @@ class ListHolder <DataType, ListDataType> extends UIDataContainer <DataType>, im
 	}
 	
 	
-	override public  function removeChildren ()
+	override public  function disposeChildren ()
 	{
 		list.detach();
 		list.dispose();
 		list = null;
-		super.removeChildren();
+		super.disposeChildren();
 	}
 	
 

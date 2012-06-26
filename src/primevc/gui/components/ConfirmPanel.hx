@@ -82,11 +82,11 @@ class ConfirmPanel extends AlertPanel
     }
 
     
-    override public function removeChildren ()
+    override public function disposeChildren ()
     {
         if (cancelBtn != null)
             removeCancelBtn();
-        super.removeChildren();
+        super.disposeChildren();
     }
 
 

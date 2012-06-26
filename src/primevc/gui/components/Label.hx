@@ -81,9 +81,9 @@ class Label extends UIDataComponent <Bindable<String>>, implements ITextStylable
 	}
 	
 	
-	override public  function removeChildren ()
+	override public  function disposeChildren ()
 	{
-		super.removeChildren();
+		super.disposeChildren();
 		field.dispose();
 		field = null;
 	}

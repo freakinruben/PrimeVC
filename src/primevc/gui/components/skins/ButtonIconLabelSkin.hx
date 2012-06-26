@@ -68,7 +68,7 @@ class ButtonIconLabelSkin extends Skin<Button>
 	}
 	
 	
-	override public  function removeChildren ()
+	override public  function disposeChildren ()
 	{
 		if (iconGraphic != null) {
 			iconGraphic.dispose();

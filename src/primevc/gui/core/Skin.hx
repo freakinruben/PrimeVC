@@ -109,7 +109,7 @@ class Skin <OwnerClass:IUIComponent> implements ISkin
 				owner.state.initialized.entering.unbind(this);
 			
 			if (owner.isInitialized())
-				removeChildren();
+				disposeChildren();
 			
 			removeBehaviours();
 			removeStates();
@@ -151,7 +151,7 @@ class Skin <OwnerClass:IUIComponent> implements ISkin
 	public function childrenCreated ()			: Void {}
 	
 	private function removeStates ()			: Void {} //	{ Assert.abstract(); }
-	public  function removeChildren ()			: Void {} //	{ Assert.abstract(); }
+	public  function disposeChildren ()			: Void {} //	{ Assert.abstract(); }
 	public function validate (changes:Int)		: Void {}
 	
 	private function removeBehaviours ()

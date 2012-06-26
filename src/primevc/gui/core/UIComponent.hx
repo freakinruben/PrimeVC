@@ -72,7 +72,7 @@ package primevc.gui.core;
  *  - createSkin
  *  - removeStates
  *  - removeSkin
- *  - removeChildren
+ *  - disposeChildren
  * 
  * Non of these methods need to call their super methods because they
  * are empty.
@@ -210,7 +210,7 @@ class UIComponent extends Sprite, implements IUIComponent
 		}
 
 		if (isInitialized())
-			removeChildren();
+			disposeChildren();
 		
 		removeStates();
 		
@@ -420,9 +420,10 @@ class UIComponent extends Sprite, implements IUIComponent
 	}
 	
 	
-	#if flash11 override #end public function removeChildren () : Void
+	public function disposeChildren ()
 	{
 		children.disposeAll();
+#if flash11	removeChildren(); #end
 	}
 	
 	

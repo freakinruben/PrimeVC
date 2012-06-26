@@ -87,7 +87,7 @@ interface ISkin
 	 * Dispose all the children of this skin. This can happen when the owner 
 	 * is disposed or when the owner changes it's skin.
 	 */
-	public  function removeChildren ()		: Void;
+	public  function disposeChildren ()		: Void;
 	
 	
 	/**

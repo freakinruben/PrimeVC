@@ -80,7 +80,7 @@ class LinearProgressSkin extends Skin<ProgressBar>
 	}
 
 
-	override public  function removeChildren ()
+	override public  function disposeChildren ()
 	{
 		if (indicator != null)
 		{

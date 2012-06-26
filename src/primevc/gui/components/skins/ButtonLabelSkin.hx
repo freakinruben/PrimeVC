@@ -53,7 +53,7 @@ class ButtonLabelSkin extends Skin<Button>
 	}
 
 
-	override public  function removeChildren ()
+	override public  function disposeChildren ()
 	{
 		if (labelField != null) {
 			labelField.dispose();

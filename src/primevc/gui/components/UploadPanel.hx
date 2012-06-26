@@ -90,13 +90,6 @@ class UploadPanel extends ConfirmPanel
         openFileList.on( acceptBtn.userEvents.mouse.click, this );
     }
 
-    
-    /*override public function removeChildren ()
-    {
-        
-        super.removeChildren();
-    }*/
-
 
     private function openFileList ()
     {

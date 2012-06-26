@@ -62,7 +62,7 @@ class VideoPlayer extends UIDataContainer <Bindable<URI>>
 			.attach( bigPlayBtn	= new Button("bigPlayBtn") );
 		
 	//	bigPlayBtn.layout.maintainAspectRatio = true;
-	//	bigPlayBtn.disable();
+		bigPlayBtn.disable();
 		
 		stream = ctrlBar.stream = video.stream;
 		
@@ -71,27 +71,18 @@ class VideoPlayer extends UIDataContainer <Bindable<URI>>
 	}
 	
 	
-	override public  function removeChildren ()
+	override public  function disposeChildren ()
 	{
 		userEvents.mouse.click.unbind(this);
 		stream.state.change.unbind(this);
 		
-		ctrlBar.detach();
-		video.detach();
-		super.removeChildren();
-	}
-	
-	
-	override public function dispose ()
-	{
-		super.dispose();
-		ctrlBar	.dispose();
-		video	.dispose();
-		stream	.dispose();
-		
+		ctrlBar.dispose();
+		video.dispose();
+		stream.dispose();
 		ctrlBar = null;
 		video	= null;
 		stream	= null;
+		super.disposeChildren();
 	}
 	
 	
@@ -112,10 +103,10 @@ class VideoPlayer extends UIDataContainer <Bindable<URI>>
 	{
 		var b		= bigPlayBtn;
 		var oldV	= b.window != null;
-		b.visible	= show;
+	//	b.visible	= show;
 		
-		if		(!oldV && show)	children.add( b );
-		else if	(oldV && !show)	children.remove( b );
+		if		(!oldV && show)	b.attachTo(this);
+		else if	(oldV && !show)	b.detach();
 	}
 }
 
@@ -144,26 +135,9 @@ class VideoControlBar extends UIContainer
 	public var stream			(default, setStream)	: VideoStream;
 	
 	
-	
 	override public function dispose ()
 	{
 		stream = null;
-		if (isInitialized())
-		{
-			layout.changed.unbind( this );
-			
-			playBtn.dispose();
-			stopBtn.dispose();
-			progressBar.dispose();
-			timeDisplay.dispose();
-			muteBtn.dispose();
-			volumeSlider.dispose();
-			fullScreenBtn.dispose();
-			
-			playBtn = stopBtn = fullScreenBtn = muteBtn = null;
-			progressBar = volumeSlider = null;
-			timeDisplay = null;
-		}
 		super.dispose();
 	}
 	
@@ -195,6 +169,24 @@ class VideoControlBar extends UIContainer
 		
 		if (stream != null)
 			addStreamListeners();
+	}
+
+
+	override public function disposeChildren ()
+	{
+		playBtn.dispose();
+		stopBtn.dispose();
+		progressBar.dispose();
+		timeDisplay.dispose();
+		muteBtn.dispose();
+		volumeSlider.dispose();
+		fullScreenBtn.dispose();
+		playBtn = stopBtn = fullScreenBtn = muteBtn = null;
+		progressBar = volumeSlider = null;
+		timeDisplay = null;
+		super.disposeChildren();
+
+		layout.changed.unbind( this );
 	}
 
 

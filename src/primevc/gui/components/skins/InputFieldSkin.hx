@@ -67,11 +67,11 @@ class InputFieldSkin extends ButtonIconLabelSkin
 	}
 
 
-	override public function removeChildren ()
+	override public function disposeChildren ()
 	{
 		labelField.userEvents.key.down.unbind(this);
 		owner.userEvents.blur.unbind(this);
-		super.removeChildren();
+		super.disposeChildren();
 	}
 	
 	

@@ -77,11 +77,11 @@ class AlertPanel extends Panel
     }
 
     
-    override public function removeChildren ()
+    override public function disposeChildren ()
     {
         acceptBtn.dispose();
         acceptBtn = null;
-        super.removeChildren();
+        super.disposeChildren();
     }
 
 

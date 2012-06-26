@@ -49,10 +49,10 @@ class ClosablePanelSkin extends BasicPanelSkin
 	}
 	
 	
-	override public function removeChildren ()
+	override public function disposeChildren ()
 	{
 		closeBtn.dispose();
 		closeBtn = null;
-		super.removeChildren();
+		super.disposeChildren();
 	}
 }

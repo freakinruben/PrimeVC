@@ -70,7 +70,7 @@ class ButtonAudioPlayerSkin extends Skin<AudioPlayer>
     }
 
 
-    override public  function removeChildren ()
+    override public  function disposeChildren ()
     {
         owner.styleClasses.remove("buttonAudioPlayer");
         owner.stream.state.change.unbind( this );
