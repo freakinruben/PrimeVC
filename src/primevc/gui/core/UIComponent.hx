@@ -91,7 +91,7 @@ class UIComponent extends Sprite, implements IUIComponent
     public var behaviours		(default, null)			        : BehaviourList;
 	public var state			(default, null)					: UIElementStates;
 	public var effects			(default, default)				: UIElementEffects;
-	public var id				(default, null)					: Bindable < String >;
+	public var id				(default, null)					: Bindable<String>;
 	
 	public var skin				(default, setSkin)				: ISkin;
 	public var layout			(default, null)					: LayoutClient;
@@ -100,11 +100,11 @@ class UIComponent extends Sprite, implements IUIComponent
 #if flash9	
 	public var graphicData		(default, null)					: GraphicProperties;
 	public var style			(default, null)					: UIElementStyle;
-	public var styleClasses		(default, null)					: SimpleList < String >;
+	public var styleClasses		(default, null)					: SimpleList<String>;
 	public var stylingEnabled	(default, setStylingEnabled)	: Bool;
 #end
 	
-	public var enabled			(default, null)					: Bindable < Bool >;
+	public var enabled			(default, null)					: Bindable<Bool>;
 	
 	
 	public function new (?id:String)

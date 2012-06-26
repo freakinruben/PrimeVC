@@ -56,7 +56,7 @@ class SkinStates extends FiniteStateMachine
 	public var disposed				(default, null) : IState;
 	
 	
-	@:keep public function new ()
+	public function new ()
 	{
 		super();
 		defaultState = empty;

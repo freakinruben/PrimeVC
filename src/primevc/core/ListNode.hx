@@ -29,7 +29,7 @@
 package primevc.core;
 
 
-@:keep class ListNode <T> implements haxe.rtti.Generic	//FIXME - no @:keep
+class ListNode <T> implements haxe.rtti.Generic
 {
 	/** Pointer to the next ListNode object **/
 	private var n : T;

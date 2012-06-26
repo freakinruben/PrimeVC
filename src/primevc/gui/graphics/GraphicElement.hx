@@ -70,7 +70,7 @@ class GraphicElement extends Invalidatable, implements IGraphicElement
 
 #if (CSSParser || debug)
 	public function toString () : String				{ return toCSS(); }
-	@:keep public function toCSS (prefix:String = "") : String	{ /*Assert.abstract();*/ return "GraphicElement"; }
+	public function toCSS (prefix:String = "") : String	{ /*Assert.abstract();*/ return "GraphicElement"; }
 	public function isEmpty () : Bool					{ return false; }
 	public function cleanUp () : Void					{}
 #end

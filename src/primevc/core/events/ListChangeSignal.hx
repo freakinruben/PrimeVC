@@ -35,4 +35,4 @@ package primevc.core.events;
  * @author	Ruben Weijers
  * @since	nov 15, 2010
  */
-typedef ListChangeSignal < DataType > = Signal1 < ListChange < DataType > >;
+typedef ListChangeSignal<DataType> = Signal1<ListChange<DataType>>;

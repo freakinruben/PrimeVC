@@ -121,7 +121,7 @@ class LayoutAlgorithmBase
 	// START VALUES
 	//
 
-	@:keep private inline function getTopStartValue ()		: Int
+	private inline function getTopStartValue ()		: Int
 	{
 		var top:Int = 0;
 	//	if (group.margin != null)	top += group.margin.top;
@@ -130,7 +130,7 @@ class LayoutAlgorithmBase
 	}
 	
 	
-	@:keep private inline function getVerCenterStartValue ()	: Int
+	private inline function getVerCenterStartValue ()	: Int
 	{
 		var start:Int = 0;
 		
@@ -145,7 +145,7 @@ class LayoutAlgorithmBase
 	}
 
 
-	@:keep private inline function getBottomStartValue ()	: Int
+	private inline function getBottomStartValue ()	: Int
 	{
 		var start = group.height;
 		
@@ -156,7 +156,7 @@ class LayoutAlgorithmBase
 	}
 	
 	
-	@:keep private inline function getLeftStartValue ()	: Int
+	private inline function getLeftStartValue ()	: Int
 	{
 		var start:Int = 0;
 	//	if (group.margin != null)	start += group.margin.left;
@@ -165,7 +165,7 @@ class LayoutAlgorithmBase
 	}
 	
 	
-	@:keep private inline function getHorCenterStartValue ()	: Int
+	private inline function getHorCenterStartValue ()	: Int
 	{
 		var start:Int = 0;
 		
@@ -180,7 +180,7 @@ class LayoutAlgorithmBase
 	}
 
 
-	@:keep private inline function getRightStartValue ()	: Int
+	private inline function getRightStartValue ()	: Int
 	{
 		var start = group.width;
 		

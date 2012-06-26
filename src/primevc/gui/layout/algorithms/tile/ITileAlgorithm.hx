@@ -27,13 +27,11 @@
  *  Ruben Weijers   <ruben @ onlinetouch.nl>
  */
 package primevc.gui.layout.algorithms.tile;
- import primevc.gui.layout.algorithms.ILayoutAlgorithm;
 
-/*
+/**
  * Interface indictating if a layout-algorithm is a tile-algorithm
  *
  * @author Ruben Weijers
  * @creation-date Sep 28, 2011
  */
-@:keep
-interface ITileAlgorithm implements ILayoutAlgorithm {}
+interface ITileAlgorithm implements primevc.gui.layout.algorithms.ILayoutAlgorithm {}

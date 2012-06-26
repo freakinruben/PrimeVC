@@ -98,7 +98,7 @@ class LayoutContainer extends AdvancedLayoutClient, implements ILayoutContainer,
 	}
 	
 	
-	@:keep public inline function attach (target:LayoutClient, depth:Int = -1) : ILayoutContainer
+	public inline function attach (target:LayoutClient, depth:Int = -1) : ILayoutContainer
 	{
 		children.add( target, depth );
 		return this;
@@ -415,7 +415,7 @@ class LayoutContainer extends AdvancedLayoutClient, implements ILayoutContainer,
 	//
 	
 	
-	private inline function setAlgorithm (v:ILayoutAlgorithm)
+	private /*inline*/ function setAlgorithm (v:ILayoutAlgorithm)
 	{
 		if (v != algorithm)
 		{
@@ -489,7 +489,7 @@ class LayoutContainer extends AdvancedLayoutClient, implements ILayoutContainer,
 	}
 	
 	
-	public inline function scrollToDepth( index:Int )
+	public /*inline*/ function scrollToDepth( index:Int )
 	{
 	//	trace("depth: "+index+"; fixedStart: "+fixedChildStart+"; length: "+children.length);
 	    if (index >= fixedChildStart && index < (fixedChildStart + children.length))

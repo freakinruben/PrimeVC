@@ -122,10 +122,16 @@ else
 	echo -e "\n2. BUILDING STYLES"
 	bash build/build-styles -s "${STYLEDIR}" ${Force:+-f} || exit 1;
 
+	if [[ -f $OUTPUT ]] ; then
+		OLDSIZE=`wc -c < $OUTPUT`
+	else
+		OLDSIZE=0
+	fi;
+
 	echo -e "\n3. COMPILING SWF\t$(date)"
 	echo build/build.hxml \
 		-swf "'$OUTPUT'" \
-		${Debug:---no-traces --dead-code-elimination --macro Undead.keepAlive()} \
+		${Debug:---no-traces --dead-code-elimination} \
 		$EXTRA \
 		-cp "'$PRJROOT/src'" \
 		-cp "'$STYLEDIR'" \
@@ -151,4 +157,9 @@ else
 		open "$OUTPUT"
 	fi;
 
+	NEWSIZE=`wc -c < $OUTPUT`
+	echo -e "\t\tOld size: ${OLDSIZE} bytes"
+	echo -e "\t\tNew size: ${NEWSIZE} bytes"
+	echo -e "\t\t--------------------"
+	echo -e "\t\tDiff    : $((NEWSIZE-OLDSIZE)) bytes bigger"
 fi;

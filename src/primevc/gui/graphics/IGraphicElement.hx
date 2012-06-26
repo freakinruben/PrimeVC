@@ -32,7 +32,7 @@ package primevc.gui.graphics;
  * @author Ruben Weijers
  * @creation-date Jul 30, 2010
  */
-interface IGraphicElement 	//FIXME - no @:keep
+interface IGraphicElement 
 				implements primevc.core.traits.IInvalidatable
 			,	implements primevc.core.traits.IDisposable
 #if CSSParser,	implements primevc.tools.generator.ICodeFormattable

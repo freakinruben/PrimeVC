@@ -82,13 +82,13 @@ class Loader implements ICommunicator
 	private static var firstLoader : Loader 	= null;
 	private static var lastLoader  : Loader 	= null;
 	
-	@:keep public static inline function pauseAll ()
+	public static inline function pauseAll ()
 	{
 		isPaused = true;
 	}
 
 
-	@:keep public static inline function resumeAll ()
+	public static inline function resumeAll ()
 	{
 		if (isPaused) {
 			isPaused = false;
@@ -185,7 +185,7 @@ class Loader implements ICommunicator
 	private static var	 		free		: Loader;
 	private static var			freeCount	: Int = 0;
 
-	@:keep public static function get () : Loader
+	public static function get () : Loader
 	{
 		var r:Loader = null,		//loader to return
 			L		 = Loader;		//Loader class
@@ -314,7 +314,7 @@ class Loader implements ICommunicator
 
 	
 	
-	@:keep public  function load (v:URI, ?c:LoaderContext) : Void
+	public  function load (v:URI, ?c:LoaderContext) : Void
 	{
 		if (isStarted)
 			close();

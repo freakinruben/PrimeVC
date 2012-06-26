@@ -40,4 +40,4 @@ package primevc.core.dispatcher;
  * @author Danny Wilson
  * @creation-date Jun 09, 2010
  */
-@:keep interface ISender {}	//FIXME - no @:keep
+interface ISender {}

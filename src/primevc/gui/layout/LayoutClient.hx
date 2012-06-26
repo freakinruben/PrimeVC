@@ -804,7 +804,7 @@ class LayoutClient extends primevc.core.traits.Invalidatable
 	 * 
 	 * FIXME
 	 */
-	@:keep public function invalidateHorPaddingMargin () //changes:Int)
+	public function invalidateHorPaddingMargin () //changes:Int)
 	{
 	//	invalidate( changes );	// <-- will destroy the applicition... things start freezing.. weird stuff :-S
 	    if (width.isSet()) {
@@ -818,7 +818,7 @@ class LayoutClient extends primevc.core.traits.Invalidatable
 	/**
 	 * @see invalidateHorPaddingMargin
 	 */
-	@:keep public function invalidateVerPaddingMargin ()
+	public function invalidateVerPaddingMargin ()
 	{
 	    if (height.isSet()) {
 	    	invalidate(LayoutFlags.PADDING | LayoutFlags.MARGIN);
@@ -1070,6 +1070,6 @@ class LayoutClient extends primevc.core.traits.Invalidatable
 	
 	public static var counter:Int = 0;
 	public var name:String;
-	@:keep public function toString() { return name; }//+"_"+state; } //state.current+"_"+name; } // + " - " + _oid; }
+	public function toString() { return name; }//+"_"+state; } //state.current+"_"+name; } // + " - " + _oid; }
 #end
 }

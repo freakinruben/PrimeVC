@@ -80,7 +80,7 @@ class Signal1 <A> extends Signal<A->Void>, implements ISender1<A>, implements IN
 	public inline function observeDisabled	(owner:Dynamic, handler:Void->Void)		return Wire.make( this, owner, cast handler, Wire.VOID_HANDLER)
 	
 #if DebugEvents
-	@:keep static function __init__()
+	static function __init__()
 		test()	//call test.. otherwise compile error: Signal1.hx:105: lines 105-232 : You can't have a local variable referenced from a closure inside __init__ (FP 10.1.53 crash)
 
 	static function test ()

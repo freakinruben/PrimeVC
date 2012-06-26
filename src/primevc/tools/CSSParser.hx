@@ -702,7 +702,7 @@ class CSSParser
 	 * It's important that the 'importExpr' variable is local, otherwise their
 	 * might be errors when stylesheets in stylesheets are imported.
 	 */
-	@:keep private inline function importStyleSheets ( styleContent ) : String
+	private inline function importStyleSheets ( styleContent ) : String
 	{
 		var importExpr = new EReg(R.IMPORT_SHEET, "i");
 		return importExpr.customReplace(styleContent, importStyleSheet);
@@ -1008,7 +1008,7 @@ class CSSParser
 	 * literal strings.
 	 * @see http://ostermiller.org/findcomment.html
 	 */
-	@:keep private inline function removeComments (style:String):String
+	private inline function removeComments (style:String):String
 	{
 		var commentExpr = new EReg(
 			  "("
