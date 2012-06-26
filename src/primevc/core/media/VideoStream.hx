@@ -114,9 +114,7 @@ class VideoStream extends BaseMediaStream
 
 		handleASyncError	.on( source.events.asyncError, 			this );
 		handleIOError		.on( source.events.ioError, 			this );
-		handleNetStatus		.on( source.events.netStatus, 			this );
-		
-	//	connection.connect( null );
+		handleNetStatus		.on( source.events.netStatus, 			this );		
 #end
 	}
 	
@@ -133,7 +131,7 @@ class VideoStream extends BaseMediaStream
 		if (isInitialized())
 		{
 			(untyped state).current = MediaStates.empty;
-			source.dispose();
+			source.dispose2();
 			connection.dispose();
 			connection	= null;
 			source		= null;
@@ -331,7 +329,7 @@ class VideoStream extends BaseMediaStream
 				trace("invalid video-url "+url.value);
 			
 			
-			case NetStreamInfoCode.notifySeek:
+			case NetStreamInfoCode.notifySeekEnd, NetStreamInfoCode.notifySeekComplete:
 				if (isPlaying())
 					source.resume();
 			

@@ -121,9 +121,6 @@ class VideoPlayer extends UIDataContainer <Bindable<URI>>
  */
 class VideoControlBar extends UIContainer
 {
-	public static inline var STREAM = 1 << 10;
-	
-	
 	private var playBtn			: Button;
 	private var stopBtn			: Button;
 	private var progressBar		: Slider;
@@ -233,9 +230,8 @@ class VideoControlBar extends UIContainer
 	
 	override public function validate ()
 	{
-		if (changes.has(STREAM))
-			if (stream != null)
-				addStreamListeners();
+		if (changes.has(primevc.gui.core.UIElementFlags.STREAM) && stream != null)
+			addStreamListeners();
 		
 		super.validate();
 	}
@@ -255,7 +251,7 @@ class VideoControlBar extends UIContainer
 				removeStreamListeners();
 			
 			stream = v;
-			invalidate(STREAM);
+			invalidate(primevc.gui.core.UIElementFlags.STREAM);
 		}
 		return v;
 	}
