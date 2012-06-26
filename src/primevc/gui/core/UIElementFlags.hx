@@ -85,6 +85,8 @@ package primevc.gui.core;
 	//
 	//VIDEO
 	public static inline var STREAM			= 1 << 19;
+	public static inline var VIDEO_WIDTH	= 1 << 20;
+	public static inline var VIDEO_HEIGHT	= 1 << 21;
 	
 
 	
@@ -112,6 +114,8 @@ package primevc.gui.core;
 		if (flags.has( SCALE ))			output.push("scale");
 		if (flags.has( SELECTED ))		output.push("selected");
 		if (flags.has( STREAM ))		output.push("video-stream");
+		if (flags.has( VIDEO_WIDTH ))	output.push("video-width");
+		if (flags.has( VIDEO_HEIGHT ))	output.push("video-height");
 		
 		return output.length > 0 ? output.join(", ") : "no-properties";
 	}

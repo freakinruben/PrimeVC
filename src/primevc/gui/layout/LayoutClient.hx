@@ -32,16 +32,8 @@ package primevc.gui.layout;
  import primevc.core.geom.IntRectangle;
  import primevc.core.geom.RectangleFlags;
  import primevc.core.states.SimpleStateMachine;
- import primevc.core.traits.IInvalidatable;
- import primevc.core.traits.Invalidatable;
  import primevc.core.validators.IntRangeValidator;
-// import primevc.core.validators.ValidatingValue;
-#if debug
- import primevc.core.traits.IUIdentifiable;
- import primevc.utils.ID;
-#end
  import primevc.types.Number;
- import primevc.gui.layout.ILayoutClient;
  import primevc.gui.states.ValidateStates;
   using primevc.utils.Bind;
   using primevc.utils.BitUtil;
@@ -59,11 +51,11 @@ private typedef Flags = LayoutFlags;
  * @creation-date	Jun 17, 2010
  * @author			Ruben Weijers
  */
-class LayoutClient extends Invalidatable
-			,	implements ILayoutClient
-#if debug	,	implements IUIdentifiable #end
+class LayoutClient extends primevc.core.traits.Invalidatable
+			,	implements primevc.gui.layout.ILayoutClient
+#if debug	,	implements primevc.core.traits.IUIdentifiable #end
 {
-	private static var EMPTY_BOX 	: Box = new Box(0,0,0,0);
+	private static var EMPTY_BOX 	 = new Box(0,0,0,0);
 
 
 	/**
@@ -159,7 +151,7 @@ class LayoutClient extends Invalidatable
 		super();
 #if debug
 		name = "LayoutClient" + counter++;
-		_oid = ID.getNext();
+		_oid = primevc.utils.ID.getNext();
 #end
 		maintainAspectRatio = false;
 		invalidatable		= true;
@@ -768,7 +760,7 @@ class LayoutClient extends Invalidatable
 	
 	
 	
-	override public function invalidateCall (propChanges:Int, sender:IInvalidatable)
+	override public function invalidateCall (propChanges:Int, sender:primevc.core.traits.IInvalidatable)
 	{
 		if (propChanges == 0)
 			return;

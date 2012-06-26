@@ -87,17 +87,9 @@ class VideoStream extends BaseMediaStream
 		width	  = new Bindable<Int>(0);
 		height	  = new Bindable<Int>(0);
 		super(streamUrl);
-	}
-	
-	
-	
-	private function init ()
-	{
-		Assert.that(!isInitialized());
 #if flash9
-		connection		= new NetConnection();
-		source			= new NetStream( connection );
-		
+		connection	= new NetConnection();
+		source		= new NetStream(connection);
 		//dirty client to catch flash player exeptions..
 		//@see http://www.actionscript.org/forums/archive/index.php3/t-142040.html
 		source.client	= this;
@@ -128,14 +120,11 @@ class VideoStream extends BaseMediaStream
 		
 #if flash9
 	//	source.client = null;		//gives error "Invalid parameter flash.net::NetStream/set client()"
-		if (isInitialized())
-		{
-			(untyped state).current = MediaStates.empty;
-			source.dispose2();
-			connection.dispose();
-			connection	= null;
-			source		= null;
-		}
+		(untyped state).current = MediaStates.empty;
+		source.dispose2();
+		connection.dispose();
+		connection	= null;
+		source		= null;
 #end
 		
 		super.dispose();
@@ -143,12 +132,6 @@ class VideoStream extends BaseMediaStream
 		width	 .dispose();
 		height	 .dispose();
 		width = height = framerate = null;
-	}
-	
-	
-	private inline function isInitialized ()
-	{
-		return #if flash9 source != null #else false #end;
 	}
 
 	
@@ -160,7 +143,6 @@ class VideoStream extends BaseMediaStream
 	
 	override public function play ( ?newUrl:URI )
 	{
-		if (!isInitialized()) 	init();
 		if (!isStopped())		stop();
 		if (newUrl != null)		url.value = newUrl;
 		
@@ -257,11 +239,11 @@ class VideoStream extends BaseMediaStream
 	
 	override private function getCurrentTime ()
 	{
-		if (!isPlaying()) {
+		if (!isPlaying())
 			return currentTime;
-		}
+		
 		if (updateTimer == null) {
-			updateTimer			= new Timer(200);
+			updateTimer			= new Timer(250);
 			updateTimer.run		= updateTime;
 			updateTime();
 		}

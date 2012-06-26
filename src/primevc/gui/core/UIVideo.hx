@@ -55,10 +55,13 @@ package primevc.gui.core;
  
   using primevc.gui.utils.UIElementActions;
   using primevc.utils.Bind;
+  using primevc.core.states.SimpleStateMachine;
   using primevc.utils.BitUtil;
   using primevc.utils.NumberUtil;
   using primevc.utils.TypeUtil;
 
+
+private typedef Flags = primevc.gui.core.UIElementFlags;
 
 /**
  * Videoclass with support for styling and other primevc features
@@ -68,21 +71,6 @@ package primevc.gui.core;
  */
 class UIVideo extends Video, implements IUIElement
 {
-	/**
-	 * bit-flag indicating that the video-width has changed
-	 **/
-	private static inline var VIDEO_WIDTH	= 1 << 8;
-	/**
-	 * bit-flag indicating that the video-height has changed
-	 **/
-	private static inline var VIDEO_HEIGHT	= 1 << 9;
-	
-	
-	
-	//
-	// PROPERTIES
-	//
-	
 	public var prevValidatable	: IValidatable;
 	public var nextValidatable	: IValidatable;
 	private var changes			: Int;
@@ -188,10 +176,10 @@ class UIVideo extends Video, implements IUIElement
 		stream = new VideoStream();
 #if flash9
 		attachNetStream( stream.source );
+		clear.onEntering( stream.state, MediaStates.stopped, this );
 #end
-		handleStreamChange		.on( stream.state.change, this );
-		invalidateVideoWidth	.on( stream.width.change, this );
-		invalidateVideoHeight	.on( stream.height.change, this );
+		callback(invalidate, Flags.VIDEO_WIDTH)	.on( stream.width.change, this );
+		callback(invalidate, Flags.VIDEO_HEIGHT).on( stream.height.change, this );
 		
 		validate();
 		removeValidation.on( displayEvents.removedFromStage, this );
@@ -326,14 +314,13 @@ class UIVideo extends Video, implements IUIElement
         
 		if (changes > 0)
 		{
-			if (changes.has( VIDEO_WIDTH | VIDEO_HEIGHT ))
+			if (changes.has( Flags.VIDEO_WIDTH | Flags.VIDEO_HEIGHT ))
 			{
 				var l = layout.as(AdvancedLayoutClient);
 				l.maintainAspectRatio = stream.width.value != 0;
-			
 				l.measuredResize( stream.width.value, stream.height.value );
 				trace(stream.width.value+", "+stream.height.value);
-				trace(l.outerBounds);
+				trace("measured: "+l.measuredWidth+", "+l.measuredHeight+"; explicit: "+l.explicitWidth+", "+l.explicitHeight+"; size: "+l.width+", "+l.height);
 			}
 		
 			changes = 0;
@@ -368,29 +355,6 @@ class UIVideo extends Video, implements IUIElement
 	public inline function rotate (v:Float)				{ this.doRotate(v); }
 	public inline function scale (sx:Float, sy:Float)	{ this.doScale(sx, sy); }
 	
-	
 	private function createBehaviours ()	: Void		{}
-	
-	
-	//
-	// EVENTHANDLERS
-	//
-	
-	private function handleStreamChange (newState:MediaStates, oldState:MediaStates)
-	{
-#if flash9
-		if (newState == MediaStates.stopped)
-			clear();
-#end
-	}
-	
-	
-	private function invalidateVideoWidth ()	{ invalidate(VIDEO_WIDTH); }
-	private function invalidateVideoHeight ()	{ invalidate(VIDEO_HEIGHT); }
-	
-	
-	
-#if debug
-	override public function toString() { return id.value; }
-#end
+#if debug override public function toString () return id.value #end
 }
