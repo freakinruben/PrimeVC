@@ -148,7 +148,7 @@ class PercentageHelper extends Bindable<Float>, implements IDisposable
 		{
 			updateValueBinding.disable();
 			var diff	= validator.getDiff();
-			percentage	= diff == 0 ? 0 : (( value - validator.min ) / diff); //.within(0, 1);
+			percentage	= diff <= 0 ? 0 : (( value - validator.min ) / diff); //.within(0, 1);
 #if debug	Assert.that( percentage >= 0 && percentage <= 1 ); #end
 			updateValueBinding.enable();
 		}

@@ -101,7 +101,7 @@ class KeyboardListNavigation<T> extends BehaviourBase < SelectableListView<T> >
             
             // TODO: check if a-z is pressed to select items that start with that letter
             if (t.focusIndex != index && index.isWithin(0, max))
-                t.focusRendererAt( index );
+                t.focusRendererOf( t.data.getItemAt(index) );
         }
     }
 

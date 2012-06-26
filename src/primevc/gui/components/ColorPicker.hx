@@ -166,7 +166,7 @@ class ColorPicker extends UIDataComponent<RevertableBindable<RGBA>>
 		var h = b.height;
 		var newX = 0, newY = 0;
 
-		var color = data.value.rgb();
+		var color:UInt = data.value.rgb();
 		var found = false;
 		
 		for (newY in 0...h) {
