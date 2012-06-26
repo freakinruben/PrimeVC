@@ -300,9 +300,11 @@ class LangMacro
 				{
 					args.push ( { name:varNames[i] , opt:false, type:MacroExprUtil.createTypePath("Dynamic") } );
 				}
+				
 				var expFunc = Context.parse("{return Strings.format(" + addSlashes(nodeParsedValue) + "," + varNames + ");}", Context.currentPos());
-				typeDefinition.fields.push( { pos:Context.currentPos(), meta:[], name:el.name, doc:null, access:[APublic], kind:FFun(  { args:args, ret:MacroExprUtil.createTypePath("String"), expr:expFunc, params:[] } ) } );
-				consLines += el.name + ":this." + el.name  + ",";
+				var prefix = el.x.parent != null? el.x.parent.nodeName :  "";
+				typeDefinition.fields.push( { pos:Context.currentPos(), meta:[], name:prefix + el.name, doc:null, access:[APublic], kind:FFun(  { args:args, ret:MacroExprUtil.createTypePath("String"), expr:expFunc, params:[] } ) } );
+				consLines += el.name + ":this." + prefix + el.name  + ",";
 
 			}
 		}
