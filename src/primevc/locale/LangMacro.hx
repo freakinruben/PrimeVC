@@ -20,28 +20,41 @@ enum ElementType {
 
 class LangMacro 
 {
+	private static var config:Array<String> = new Array<String>();
+	@:macro public static function addYAML(key:String):Expr
+	{
+		config.push(key);
+		return macro true;
+		
+	}
 	@:macro public static function build() : Array<Field> 
     {      
 		var pos = haxe.macro.Context.currentPos();
 		var fields = haxe.macro.Context.getBuildFields();
 		
 		var langsRaw = new Hash<YamlHX>();
-		
-		for ( dir in Context.getClassPath() )
+		for ( file in config)
 		{
-			var currentDir =  dir + "i18n";
-			if (neko.FileSystem.exists(currentDir))
+			var data = YamlHX.read( neko.io.File.getContent(file) );
+			var key = data.x.firstElement().nodeName;
+			if ( langsRaw.exists(key))
 			{
-				for (file in  neko.FileSystem.readDirectory(currentDir) )
-				{
-					if ( file.indexOf(".yaml") > -1 )
-					{
-						haxe.macro.Context.registerModuleDependency("primevc.locale.LangMacro", currentDir + "/" + file);
-						var data = YamlHX.read( neko.io.File.getContent( currentDir + "/" + file) );
-						var key = data.x.firstElement().nodeName;
-						langsRaw.set(key , data);
-					}
-				}
+				//merge
+				 var xmlToPush = langsRaw.get(key);
+				 var xml = xmlToPush.x.firstElement();
+				 for (el in data.x.firstElement().array())
+				 {
+					 //trace(el);
+					 xml.addChild(el);
+				 }
+				langsRaw.set(key , xmlToPush);
+				
+				//trace(xmlToPush.x.toString());
+				
+			}
+			else
+			{
+				langsRaw.set(key , data);
 			}
 		}
 
@@ -92,11 +105,10 @@ class LangMacro
 		}
 
 		var defaultLang = langsRaw.iterator().next();
-		
 		if (defaultLang == null) Context.error("Default language not defined", pos);
 		
-		
 		constructorWords = traverseXMLLangManBind( new Fast(defaultLang.x.firstElement()), t);
+		
 		
 		t.fields.push( { meta:[], name:"new", doc:null, access:[APublic], kind:FFun( { args:[], ret:null, expr:Context.parse("{" + constructorWords + "}", pos), params:[] } ), pos:pos } );
 		
@@ -436,6 +448,10 @@ class LangMacro
 					
 					
 				}
+			}
+			else
+			{
+				//trace(el.name);
 			}
 		}
 		return result;

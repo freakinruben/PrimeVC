@@ -25,11 +25,10 @@ class LangMan
 	
 	private static function getInstance()
 	{
+		
 		if (instance == null)  
 		{
 			instance = new LangMan();
-			instance.NlNL(); //TODO
-			
 		}
 		return ( instance);
 	}
