@@ -79,7 +79,7 @@ class ResizeEffect extends Effect<primevc.gui.traits.ISizeable,ResizeEffect>
 	
 	override public function clone ()
 	{
-		return cast new ResizeEffect( duration, duration, easing, startW, startH, endW, endH );
+		return new ResizeEffect( duration, duration, easing, startW, startH, endW, endH );
 	}
 	
 
@@ -99,7 +99,7 @@ class ResizeEffect extends Effect<primevc.gui.traits.ISizeable,ResizeEffect>
 	
 #if !CSSParser
 	override public function createEffectInstance (target)
-		return cast new primevc.gui.effects.effectInstances.ResizeEffectInstance(target, this)
+		return new primevc.gui.effects.effectInstances.ResizeEffectInstance(target, this)
 #else
 
 	override public function toCSS (prefix:String = "") : String

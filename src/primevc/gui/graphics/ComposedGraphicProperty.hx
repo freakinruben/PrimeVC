@@ -130,14 +130,11 @@ class ComposedGraphicProperty extends GraphicElement, implements IComposedGraphi
 	public function add (property:IGraphicProperty) : Bool
 	{
 		Assert.that(property != this);
-		
 		if (property == null)
 			return false;
 		
 		if (property.is(IComposedGraphicProperty))
-		{
-			merge(cast property);
-		}
+			merge(property.as(IComposedGraphicProperty));
 		else
 		{
 			var cell = new FastCell<IGraphicProperty>(property, lastCell);

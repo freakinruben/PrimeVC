@@ -79,14 +79,14 @@ class MoveEffect extends Effect < IPositionable, MoveEffect >
 	
 	override public function clone ()
 	{
-		return cast new MoveEffect( duration, duration, easing, startX, startY, endX, endY );
+		return new MoveEffect( duration, duration, easing, startX, startY, endX, endY );
 	}
 	
 	
 #if !CSSParser
 	override public function createEffectInstance (target:IPositionable)
 	{
-		return cast new primevc.gui.effects.effectInstances.MoveEffectInstance(target, this);
+		return new primevc.gui.effects.effectInstances.MoveEffectInstance(target, this);
 	}
 #end
 

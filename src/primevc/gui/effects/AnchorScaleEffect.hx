@@ -72,14 +72,14 @@ class AnchorScaleEffect extends #if !CSSParser Effect<primevc.gui.display.IDispl
 	
 	override public function clone ()
 	{
-		return cast new AnchorScaleEffect(duration, delay, easing, zoomPosition, startValue, endValue);
+		return new AnchorScaleEffect(duration, delay, easing, zoomPosition, startValue, endValue);
 	}
 	
 	
 #if !CSSParser
 	override public function createEffectInstance (target)
 	{
-		return cast new primevc.gui.effects.effectInstances.AnchorScaleEffectInstance(target, this);
+		return new primevc.gui.effects.effectInstances.AnchorScaleEffectInstance(target, this);
 	}
 #end
 	

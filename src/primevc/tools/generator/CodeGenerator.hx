@@ -251,8 +251,8 @@ class CodeGenerator implements ICodeGenerator
 			else if (v.is( Bool ))					tBool(v);
 	//		else if (Std.is( v, Hash ))				formatHash(v);
 			else if (null != Type.getEnum(v))		convertEnum(v);
-#if js		else if (v.__name__ != null)			tClass( addImportFor( Type.getClassName(cast v) ) );
-#else		else if (null != Type.getClassName(v))	tClass( addImportFor( Type.getClassName(cast v) ) ); #end
+#if js		else if (v.__name__ != null)			tClass( addImportFor( Type.getClassName(v) ) );
+#else		else if (null != Type.getClassName(v))	tClass( addImportFor( Type.getClassName(v) ) ); #end
 			else if (null != Type.getClass(v))		createClassNameConstructor( v.getClass().getClassName(), null );
 			else									null;
 

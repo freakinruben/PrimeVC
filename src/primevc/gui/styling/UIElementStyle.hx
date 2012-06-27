@@ -34,7 +34,6 @@ package primevc.gui.styling;
  import primevc.core.collections.PriorityList;
  import primevc.core.dispatcher.Signal0;
  import primevc.core.dispatcher.Wire;
- import primevc.core.traits.IInvalidatable;
  import primevc.gui.traits.IDisplayable;
  import primevc.gui.traits.IStylable;
  import primevc.utils.FastArray;
@@ -782,11 +781,11 @@ class UIElementStyle implements IUIElementStyle
 	// IINVALIDATELIST METHODS
 	//
 	
-	public function invalidateCall (changes:Int, sender:IInvalidatable)
+	public function invalidateCall (changes:Int, sender:primevc.core.traits.IInvalidatable)
 	{
-		if (sender.is(UIElementStyle))
+		if (sender.is(StyleBlock))
 		{
-			var senderCell = styles.getCellForItem( cast sender );
+			var senderCell = styles.getCellForItem( sender.as(StyleBlock) );
 			if (senderCell != null)
 			{
 				//sender is a styleblock of this style 

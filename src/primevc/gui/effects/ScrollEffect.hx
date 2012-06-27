@@ -79,7 +79,7 @@ class ScrollEffect extends Effect<primevc.gui.traits.IScrollable, ScrollEffect>
     
     override public function clone ()
     {
-        return cast new ScrollEffect( duration, duration, easing, startX, startY, endX, endY );
+        return new ScrollEffect( duration, duration, easing, startX, startY, endX, endY );
     }
 
 
@@ -99,7 +99,7 @@ class ScrollEffect extends Effect<primevc.gui.traits.IScrollable, ScrollEffect>
     
 #if !CSSParser
     override public function createEffectInstance (target) : primevc.gui.effects.effectInstances.IEffectInstance<primevc.gui.traits.IScrollable,ScrollEffect>
-        return cast new primevc.gui.effects.effectInstances.ScrollEffectInstance(target, this)
+        return new primevc.gui.effects.effectInstances.ScrollEffectInstance(target, this)
 #else
 
     override public function toCSS (prefix:String = "") : String

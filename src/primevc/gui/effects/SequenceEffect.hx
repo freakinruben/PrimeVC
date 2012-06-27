@@ -39,7 +39,7 @@ class SequenceEffect extends CompositeEffect
 {
 	override public function clone ()
 	{
-		return cast new SequenceEffect( duration, delay, easing );
+		return new SequenceEffect( duration, delay, easing );
 	}
 	
 	
@@ -55,7 +55,7 @@ class SequenceEffect extends CompositeEffect
 #if !CSSParser
 	override public function createEffectInstance (target)
 	{
-		return cast new primevc.gui.effects.effectInstances.SequenceEffectInstance(target, this);
+		return new primevc.gui.effects.effectInstances.SequenceEffectInstance(target, this);
 	}
 
 #else

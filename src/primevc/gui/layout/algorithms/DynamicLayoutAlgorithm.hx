@@ -251,8 +251,8 @@ class DynamicLayoutAlgorithm extends LayoutAlgorithmBase, implements ILayoutAlgo
 #if CSSParser
 	override public function toCode (code:ICodeGenerator)
 	{
-		var hor = horAlgorithm == null ? null : new Factory( cast horAlgorithm.getClass(), [ horizontalDirection ] );
-		var ver = verAlgorithm == null ? null : new Factory( cast verAlgorithm.getClass(), [ verticalDirection ] );
+		var hor = horAlgorithm == null ? null : new Factory( /*cast */horAlgorithm.getClass(), [ horizontalDirection ] );
+		var ver = verAlgorithm == null ? null : new Factory( /*cast */verAlgorithm.getClass(), [ verticalDirection ] );
 		code.construct( this, [ hor, ver ] );
 	}
 #end

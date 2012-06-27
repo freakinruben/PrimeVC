@@ -43,7 +43,7 @@ package primevc.core.collections;
  * @creation-date	Jun 29, 2010
  * @author			Ruben Weijers
  */
-class SimpleList < DataType > implements IEditableList < DataType > 
+class SimpleList<DataType> implements IEditableList<DataType> 
 	#if (flash9 || cpp) ,implements haxe.rtti.Generic #end
 {
 	public var change		(default, null)		: ListChangeSignal<DataType>;
@@ -54,11 +54,11 @@ class SimpleList < DataType > implements IEditableList < DataType >
 	/**
 	 * Pointer to the first added cell
 	 */
-	public var first		(default, null)		: FastDoubleCell < DataType >;
+	public var first		(default, null)		: FastDoubleCell<DataType>;
 	/**
 	 * Pointer to the last added cell
 	 */
-	public var last			(default, null)		: FastDoubleCell < DataType >;
+	public var last			(default, null)		: FastDoubleCell<DataType>;
 	
 	
 	public function new()
@@ -100,7 +100,7 @@ class SimpleList < DataType > implements IEditableList < DataType >
 	}
 	
 	
-	public function clone () : IReadOnlyList < DataType >
+	public function clone () : IReadOnlyList<DataType>
 	{
 		var inst	= new SimpleList<DataType>();
 		var length	= this.length;
@@ -111,7 +111,7 @@ class SimpleList < DataType > implements IEditableList < DataType >
 	}
 	
 	
-	public function duplicate () : IReadOnlyList < DataType >
+	public function duplicate () : IReadOnlyList<DataType>
 	{
 		var inst	= new SimpleList<DataType>();
 		var length	= this.length;
@@ -122,7 +122,7 @@ class SimpleList < DataType > implements IEditableList < DataType >
 	}
 	
 	
-	public inline function isEmpty()
+	@:keep public inline function isEmpty()	//FIXME: @:keep shouldn't be needed. Without it, DCE will cause runtime error: Illegal override of SimpleList_String with....
 	{
 		return length == 0;
 	}
@@ -228,11 +228,11 @@ class SimpleList < DataType > implements IEditableList < DataType >
 	 */
 	public inline function insertAt (item:DataType, ?pos:Int = -1) : Int
 	{
-		return insertCellAt( new FastDoubleCell < DataType >( item, null ), pos );
+		return insertCellAt( new FastDoubleCell<DataType>( item, null ), pos );
 	}
 
 
-	private function insertCellAt( cell:FastDoubleCell < DataType >, ?pos:Int = -1) : Int
+	private function insertCellAt( cell:FastDoubleCell<DataType>, ?pos:Int = -1) : Int
 	{
 		if (pos < 0 || pos > length)
 			pos = length;
@@ -320,7 +320,7 @@ class SimpleList < DataType > implements IEditableList < DataType >
 	}
 	
 	
-	private function removeCell (cell:FastDoubleCell < DataType >)
+	private function removeCell (cell:FastDoubleCell<DataType>)
 	{
 		if (cell == first)	first = cell.next;
 		if (cell == last)	last = cell.prev;

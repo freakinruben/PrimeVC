@@ -150,7 +150,7 @@ class ValidateLayoutBehaviour extends ValidatingBehaviour < IUIElement >, implem
 	
 	public inline function invalidate ()				getValidationManager().add( this )
 	public inline function validate ()					if (target.notNull()) { target.layout.validate(); }
-	override private function getValidationManager ()	return isOnStage() ? cast target.system.invalidation : null
+	override private function getValidationManager ()	return isOnStage() ? target.system.invalidation : null
 	
 	
 	public function applyChanges (changes:Int)

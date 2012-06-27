@@ -40,7 +40,6 @@ package primevc.gui.styling;
 #end
 
 
-typedef CellType = FastDoubleCell < StyleBlock >;
 
 /**
  * Base class for style-proxy's
@@ -198,7 +197,7 @@ class StyleCollectionBase < StyleGroupType:StyleSubBlock >
 	{
 		if (elementStyle.styles.length > 0)
 		{
-			var styleCell:CellType = null;
+			var styleCell:FastDoubleCell<StyleBlock> = null;
 			var iterator = groupRevIterator;
 			
 			iterator.rewind();
@@ -212,7 +211,7 @@ class StyleCollectionBase < StyleGroupType:StyleSubBlock >
 			}
 			
 			Assert.that( styleCell != null );
-			iterator.setCurrent( cast styleCell.prev );
+			iterator.setCurrent( styleCell.prev );
 			
 			for (styleGroup in iterator)
 			{
@@ -253,7 +252,7 @@ class StyleCollectionBase < StyleGroupType:StyleSubBlock >
 class StyleCollectionIteratorBase implements IDisposable
 {
 	private var elementStyle	: IUIElementStyle;
-	public var currentCell		: CellType;
+	public var currentCell		: FastDoubleCell<StyleBlock>;
 	/**
 	 * Flag to search for in target styles to see if the style contains the group
 	 */
@@ -282,23 +281,23 @@ class StyleCollectionIteratorBase implements IDisposable
 	 * Method will set the current property to the next cell and will return 
 	 * the previous current value.
 	 */
-	private function setNext() : CellType	{ Assert.abstract(); return null; }
+	private function setNext() : FastDoubleCell<StyleBlock>	{ Assert.abstract(); return null; }
 	public  function hasNext () : Bool		{ return currentCell != null; }
 	
 	
-	public function setCurrent ( cur:Dynamic )
+	/*public function setCurrent(cur:FastDoubleCell<StyleBlock>)
 	{
-		if (cur == null) {
-			currentCell = null;
-			return;
+		currentCell = cur;
+		if (cur != null && !cur.data.has(flag) && hasNext()) {
+#if debug	Assert.notEqual(cur.next, cur); #end
+			setNext();
 		}
-		
-		Assert.isType( cur, CellType );
-		var styleCell = cast ( cur, CellType );
-		
-		currentCell = styleCell;
-		if (!styleCell.data.has( flag ) && hasNext()) {
-			Assert.notEqual(currentCell.next, currentCell);
+	}*/
+	public function setCurrent(cur:Dynamic)
+	{
+		var cur = currentCell = cast cur;
+		if (cur != null && !cur.data.has(flag) && hasNext()) {
+#if debug	Assert.notEqual(cur.next, cur); #end
 			setNext();
 		}
 	}
@@ -339,7 +338,7 @@ class StyleCollectionForwardIterator < StyleGroupType > extends StyleCollectionI
 	
 	public function test ()
 	{
-		var cur = elementStyle.styles.first, prev:CellType = null;
+		var cur = elementStyle.styles.first, prev:FastDoubleCell<StyleBlock> = null;
 		while (cur != null)
 		{
 			if (prev == null)	Assert.isNull( cur.prev, "first incorrect" );
@@ -386,7 +385,7 @@ class StyleCollectionReversedIterator < StyleGroupType > extends StyleCollection
 	
 	public function test ()
 	{
-		var cur = elementStyle.styles.last, prev:CellType = null;
+		var cur = elementStyle.styles.last, prev:FastDoubleCell<StyleBlock> = null;
 		while (cur != null)
 		{
 			if (prev == null)	Assert.isNull( cur.next, "last incorrect" );

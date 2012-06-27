@@ -294,13 +294,13 @@ class ListView<ListDataType> extends UIDataContainer < IReadOnlyList < ListDataT
 	private inline function setRendererData (r:IUIDataElement<ListDataType>, v:ListDataType)
 	{
 	    if (r.is(IItemRenderer))	r.as(IItemRenderer).vo.value = cast v;
-	 	else						r.data = cast v;
+	 	else						r.data = v;
 	}
 	
 	
 	private inline function getRendererData (r:IUIDataElement<ListDataType>) : ListDataType
 	{
-	    return r.is(IItemRenderer) ? cast r.as(IItemRenderer).vo.value : cast r.data;
+	    return r.is(IItemRenderer) ? cast r.as(IItemRenderer).vo.value : r.data;
 	}
 	
 	

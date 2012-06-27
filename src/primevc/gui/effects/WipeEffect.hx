@@ -72,9 +72,9 @@ class WipeEffect extends #if !CSSParser Effect<primevc.gui.display.IDisplayObjec
 	
 	
 	override public function setValues (v:EffectProperties) {}
-	override public function clone ()						{ return cast new WipeEffect( duration, delay, easing, direction, startValue, endValue ); }
+	override public function clone ()						{ return new WipeEffect( duration, delay, easing, direction, startValue, endValue ); }
 #if !CSSParser
-	override public function createEffectInstance (target)	{ return cast new primevc.gui.effects.effectInstances.WipeEffectInstance(target, this); }
+	override public function createEffectInstance (target)	{ return new primevc.gui.effects.effectInstances.WipeEffectInstance(target, this); }
 
 #else
 

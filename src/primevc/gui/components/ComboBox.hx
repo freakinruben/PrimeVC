@@ -158,7 +158,7 @@ class ComboBox <DataType> extends DataButton <DataType>
 		if (v != listData)
 		{
 			if (popup != null)
-				popup.listData = cast v;
+				popup.listData = v;
 			
 			listData	= v;
 			vo.value	= null;

@@ -73,7 +73,7 @@ class Signal0 extends Signal<Void->Void>, implements ISender0, implements INotif
 	
 	public inline function bind				(owner:Dynamic, handler:Void->Void)		return Wire.make( this, owner, handler, Wire.ENABLED)
 	public inline function bindOnce			(owner:Dynamic, handler:Void->Void)		return Wire.make( this, owner, handler, Wire.ENABLED | Wire.SEND_ONCE)
-	public inline function bindDisabled		(owner:Dynamic, handler:Void->Void)		return Wire.make( this, owner, cast handler, 0)
+	public inline function bindDisabled		(owner:Dynamic, handler:Void->Void)		return Wire.make( this, owner, handler, 0)
 	public inline function observe			(owner:Dynamic, handler:Void->Void)		return bind(owner, handler)
 	public inline function observeOnce		(owner:Dynamic, handler:Void->Void)		return bindOnce(owner, handler)
 	public inline function observeDisabled	(owner:Dynamic, handler:Void->Void)		return bindDisabled(owner, handler)

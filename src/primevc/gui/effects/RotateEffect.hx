@@ -66,7 +66,7 @@ class RotateEffect extends #if !CSSParser Effect<primevc.gui.display.IDisplayObj
 	
 	override public function clone ()
 	{
-		return cast new RotateEffect(duration, delay, easing, startValue, endValue);
+		return new RotateEffect(duration, delay, easing, startValue, endValue);
 	}
 	
 	
@@ -84,7 +84,7 @@ class RotateEffect extends #if !CSSParser Effect<primevc.gui.display.IDisplayObj
 	
 #if !CSSParser
 	override public function createEffectInstance (target)
-		return cast new primevc.gui.effects.effectInstances.RotateEffectInstance(target, this)
+		return new primevc.gui.effects.effectInstances.RotateEffectInstance(target, this)
 #else
 
 	override public function toCSS (prefix:String = "") : String

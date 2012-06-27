@@ -74,7 +74,7 @@ class QueueManager implements IDisposable, implements IValidatable
 		while (last != null)
 		{
 			var obj = last;
-			last = cast last.prevValidatable;
+			last = last.prevValidatable;
 			obj.nextValidatable = obj.prevValidatable = null;
 		}
 		

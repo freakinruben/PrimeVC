@@ -112,6 +112,6 @@ class RenderGraphicsBehaviour extends ValidatingBehaviour < IDrawable >, impleme
 	
 	override private function getValidationManager ()
 	{
-		return (isOnStage()) ? cast target.window.as(UIWindow).rendering : null;
+		return (isOnStage()) ? target.window.as(UIWindow).rendering : null;
 	}
 }

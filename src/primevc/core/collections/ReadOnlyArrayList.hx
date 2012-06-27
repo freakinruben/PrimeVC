@@ -45,17 +45,17 @@ package primevc.core.collections;
  * @author Ruben Weijers
  * @creation-date Nov 19, 2010
  */
-class ReadOnlyArrayList < DataType > implements IReadOnlyList < DataType >, implements haxe.rtti.Generic
+class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements haxe.rtti.Generic
 {
 	public var beforeChange	(default, null)		: ListChangeSignal<DataType>;
 	public var change		(default, null)		: ListChangeSignal<DataType>;
-	public var list			(default, null)		: FastArray < DataType >;
+	public var list			(default, null)		: FastArray<DataType>;
 	public var length		(getLength, never)	: Int;
 	
-	
-	public var array		(getArray,null)		: FastArray < DataType >;
+	public var array		(getArray,null)		: FastArray<DataType>;
 		inline function getArray() : FastArray<DataType> return #if flash10 flash.Vector.convert(list) #else list #end
 	
+
 	public function new( wrapAroundList:FastArray<DataType> = null )
 	{
 		change 		 = new ListChangeSignal();
@@ -77,22 +77,22 @@ class ReadOnlyArrayList < DataType > implements IReadOnlyList < DataType >, impl
 	}
 	
 	
-	public function clone () : IReadOnlyList < DataType >
+	public function clone () : IReadOnlyList<DataType>
 	{
 		return new ReadOnlyArrayList<DataType>( list.clone() );
 	}
 	
 	
-	public function duplicate () : IReadOnlyList < DataType >
+	public function duplicate () : IReadOnlyList<DataType>
 	{
 		return new ReadOnlyArrayList<DataType>( list.duplicate() );
 	}
 	
 	
 	private inline function getLength ()								{ return list.length; }
-	public inline function iterator () : Iterator <DataType>			{ return cast forwardIterator(); }
-	public inline function forwardIterator () : IIterator <DataType>	{ return cast new FastArrayForwardIterator<DataType>(list); }
-	public inline function reversedIterator () : IIterator <DataType>	{ return cast new FastArrayReversedIterator<DataType>(list); }
+	public inline function iterator () : Iterator<DataType>				{ return cast forwardIterator(); }
+	public inline function forwardIterator () : IIterator<DataType>		{ return cast new FastArrayForwardIterator<DataType>(list); }
+	public inline function reversedIterator () : IIterator<DataType>	{ return cast new FastArrayReversedIterator<DataType>(list); }
 
 	public inline function disableEvents ()								{ beforeChange.disable(); change.disable(); }
 	public inline function enableEvents ()								{ beforeChange.enable();  change.enable(); }
@@ -151,11 +151,11 @@ class ReadOnlyArrayList < DataType > implements IReadOnlyList < DataType >, impl
 	/**
 	 * Keeps track of which lists are updating this list
 	 */
-	private var boundTo : FastList < ReadOnlyArrayList < DataType > >;
+	private var boundTo : FastList<ReadOnlyArrayList<DataType>>;
 	/**
 	 * Keeps track of which lists should be updated when this list changes
 	 */
-	private var writeTo : FastList < ReadOnlyArrayList < DataType > >;
+	private var writeTo : FastList<ReadOnlyArrayList<DataType>>;
 
 
 

@@ -1959,7 +1959,7 @@ class CSSParser
 			//there is already an composed fill background property specified. Let's add the newFill to this composed fill.
 			if (g.background != null && g.background.is(ComposedFill))
 				if (newFill.is(ComposedFill))
-					g.background.as(ComposedFill).merge( cast newFill );
+					g.background.as(ComposedFill).merge( newFill.as(ComposedFill) );
 				else
 					g.background.as(ComposedFill).add( newFill );
 			
@@ -2320,7 +2320,7 @@ class CSSParser
 			if (border != null)
 			{
 				if (g.border != null && g.border.is(ComposedBorder) && border.is(ComposedBorder))
-					g.border.as(ComposedBorder).merge( cast border );
+					g.border.as(ComposedBorder).merge( border.as(ComposedBorder) );
 				else
 					g.border = border;
 			}
@@ -2337,9 +2337,9 @@ class CSSParser
 	{
 		var border:IBorder = null;
 		
-		if		(fill.is(SolidFill))	border = cast new SolidBorder( cast fill	, cast weight, inside );
-		else if	(fill.is(GradientFill))	border = cast new GradientBorder( cast fill	, cast weight, inside );
-		else if	(fill.is(BitmapFill))	border = cast new BitmapBorder(	cast fill	, cast weight, inside );
+		if		(fill.is(SolidFill))	border = new SolidBorder( fill.as(SolidFill), weight, inside );
+		else if	(fill.is(GradientFill))	border = new GradientBorder( fill.as(GradientFill), weight, inside );
+		else if	(fill.is(BitmapFill))	border = new BitmapBorder(	fill.as(BitmapFill), weight, inside );
 #if debug
 		else	throw "Fill type: "+Std.string(fill)+" not supported for border";
 #end

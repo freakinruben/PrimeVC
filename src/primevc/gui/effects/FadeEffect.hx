@@ -66,14 +66,14 @@ class FadeEffect extends #if !CSSParser Effect<primevc.gui.display.IDisplayObjec
 	
 	override public function clone ()
 	{
-		return cast new FadeEffect( duration, duration, easing, startValue, endValue );
+		return new FadeEffect( duration, duration, easing, startValue, endValue );
 	}
 	
 	
 #if !CSSParser
 	override public function createEffectInstance (target)
 	{
-		return cast new primevc.gui.effects.effectInstances.FadeEffectInstance(target, this);
+		return new primevc.gui.effects.effectInstances.FadeEffectInstance(target, this);
 	}
 #end
 

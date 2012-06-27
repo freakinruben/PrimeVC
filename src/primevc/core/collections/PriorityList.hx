@@ -136,9 +136,9 @@ class PriorityList < DataType : IPrioritizable >
 	 * Method will add the given item on the correct position in the list. 
 	 * The higher the priority, the earlier the position
 	 */
-	public function add ( item : DataType )
+	public function add (item:DataType)
 	{
-		var cell	= new FastDoubleCell < DataType >( item );
+		var cell	= new FastDoubleCell<DataType>(item);
 		var isAdded	= false;
 		
 		if (first == null || last == null)

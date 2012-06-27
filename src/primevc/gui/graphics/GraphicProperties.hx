@@ -132,7 +132,7 @@ class GraphicProperties implements IGraphicElement
 	
 	public function invalidateCall (changeFromOther:Int, sender:IInvalidatable) : Void
 	{
-		var change = switch (sender) {
+		invalidate(switch (sender) {
 			case cast border:	GraphicFlags.BORDER;
 			case cast shape:	GraphicFlags.SHAPE;
 			case cast fill:		GraphicFlags.FILL;
@@ -142,9 +142,7 @@ class GraphicProperties implements IGraphicElement
 				else
 					0;
 			default: 0;
-		}
-		
-		invalidate( change );
+		});
 	}
 	
 	

@@ -46,14 +46,14 @@ class ParallelEffect extends CompositeEffect
 {
 	override public function clone ()
 	{
-		return cast new ParallelEffect( duration, delay, easing );
+		return new ParallelEffect( duration, delay, easing );
 	}
 	
 	
 #if !CSSParser
 	override public function createEffectInstance (target)
 	{
-		return cast new ParallelEffectInstance( target, this );
+		return new ParallelEffectInstance( target, this );
 	}
 #end
 	
