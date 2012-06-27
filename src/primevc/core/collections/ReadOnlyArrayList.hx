@@ -53,7 +53,7 @@ class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements
 	public var length		(getLength, never)	: Int;
 	
 	public var array		(getArray,null)		: FastArray<DataType>;
-		inline function getArray() : FastArray<DataType> return #if flash10 flash.Vector.convert(list) #else list #end
+ 		inline function getArray() : FastArray<DataType> return #if flash10 flash.Vector.convert(list) #else list #end
 	
 
 	public function new( wrapAroundList:FastArray<DataType> = null )
@@ -89,10 +89,10 @@ class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements
 	}
 	
 	
-	private inline function getLength ()								{ return list.length; }
-	public inline function iterator () : Iterator<DataType>				{ return cast forwardIterator(); }
-	public inline function forwardIterator () : IIterator<DataType>		{ return cast new FastArrayForwardIterator<DataType>(list); }
-	public inline function reversedIterator () : IIterator<DataType>	{ return cast new FastArrayReversedIterator<DataType>(list); }
+	@:keep private inline function getLength ()								return list.length
+	@:keep public  inline function iterator () : Iterator<DataType>			return forwardIterator()
+	@:keep public  inline function forwardIterator () : IIterator<DataType>	return new FastArrayForwardIterator<DataType>(list)
+	@:keep public  inline function reversedIterator () : IIterator<DataType>	return new FastArrayReversedIterator<DataType>(list)
 
 	public inline function disableEvents ()								{ beforeChange.disable(); change.disable(); }
 	public inline function enableEvents ()								{ beforeChange.enable();  change.enable(); }
@@ -110,7 +110,7 @@ class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements
 	 * @param	pos
 	 * @return
 	 */
-	public inline function getItemAt (pos:Int) : DataType
+	@:keep public inline function getItemAt (pos:Int) : DataType
 	{
 		Assert.that(pos >= 0, pos+"");
 	//	var i:Int = pos < 0 ? length + pos : pos;
@@ -118,13 +118,13 @@ class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements
 	}
 	
 	
-	public inline function indexOf (item:DataType) : Int
+	@:keep public inline function indexOf (item:DataType) : Int
 	{
 		return list.indexOf(item);
 	}
 	
 	
-	public inline function has (item:DataType) : Bool
+	@:keep public inline function has (item:DataType) : Bool
 	{
 		return list.indexOf(item) >= 0;
 	}
@@ -165,7 +165,7 @@ class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements
 	 *	
 	 * In other words, update this when otherList changes.
 	 */
-	public inline function bind (other:ReadOnlyArrayList<DataType>)
+	@:keep public inline function bind (other:ReadOnlyArrayList<DataType>)
 	{
 		other.keepUpdated(this);
 	}
@@ -181,7 +181,7 @@ class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements
 		
 		var removed = false;
 		if (writeTo.notNull()) 	{ 
-			removed = this.writeTo.remove(cast other);
+			removed = this.writeTo.remove(other);
 			if (removed) {
 				beforeChange.unbind( other );
 				change.unbind( other );
@@ -206,7 +206,7 @@ class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements
 
 
 	
-	private inline function registerBoundTo(other:ReadOnlyArrayList<DataType>)
+	@:keep private inline function registerBoundTo(other:ReadOnlyArrayList<DataType>)
 	{
 		Assert.notNull(other);
 		
@@ -218,7 +218,7 @@ class ReadOnlyArrayList<DataType> implements IReadOnlyList<DataType>, implements
 	}
 	
 	
-	private inline function addToBoundList<T>(list:FastList<T>, other:T)
+	@:keep private inline function addToBoundList<T>(list:FastList<T>, other:T)
 	{
 		Assert.notNull(list);
 		

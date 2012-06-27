@@ -104,7 +104,7 @@ class UploadPanel extends ConfirmPanel
     
     private inline function unsetBrowser ()
     {
-        fileBrowser.dispose();
+        fileBrowser.is(FileReference) ? fileBrowser.as(FileReference).dispose2() : fileBrowser.dispose();
         fileBrowser = null;
     }
 

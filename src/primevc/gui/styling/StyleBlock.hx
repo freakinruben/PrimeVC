@@ -879,7 +879,7 @@ class StyleBlock extends StyleBlockBase
 	}
 	
 	
-	public inline function setInheritedStyles( nestedStyle:StyleBlock = null, superStyle:StyleBlock = null, extendedStyle:StyleBlock = null, parentStyle:StyleBlock = null )
+	public  function setInheritedStyles( nestedStyle:StyleBlock = null, superStyle:StyleBlock = null, extendedStyle:StyleBlock = null, parentStyle:StyleBlock = null )
 	{
 		if (nestingInherited != null)	this.nestingInherited	= nestedStyle;
 		if (superStyle != null)			this.superStyle			= superStyle;
@@ -888,7 +888,7 @@ class StyleBlock extends StyleBlockBase
 	}
 	
 	
-	public inline function setChildren (idChildren:ChildrenList = null, styleNameChildren:ChildrenList = null, elementChildren:ChildrenList = null)
+	public  function setChildren (idChildren:ChildrenList = null, styleNameChildren:ChildrenList = null, elementChildren:ChildrenList = null)
 	{
 		if (idChildren != null)			this.idChildren			= idChildren;
 		if (styleNameChildren != null)	this.styleNameChildren	= styleNameChildren;

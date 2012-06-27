@@ -50,11 +50,11 @@ class FastArrayForwardIterator <DataType> implements IIterator <DataType>
 		rewind();
 	}
 	
-	public inline function setCurrent (val:Dynamic)	{ current = val; }
-	public inline function rewind ()				{ current = 0; }
-	public inline function hasNext ()				{ return current < target.length.int(); }		// <- Vector.length is defined as UInt, but since haXe damns it to implement UInt, we have to cast it :-(
-	public inline function next ()					{ return target[ current++ ]; }
-	public inline function value ()					{ return target[ current ]; }
+	@:keep public inline function setCurrent (val:Dynamic)	current = val
+	@:keep public inline function rewind ()					current = 0
+	@:keep public inline function hasNext ()				return current < target.length.int()
+	@:keep public inline function next ()					return target[current++]
+	@:keep public inline function value ()					return target[current]
 	
 //	public inline function hasPrev ()				{ return (current - 1) >= 0 ; }
 //	public inline function prev ()					{ current -= 2; return value(); }

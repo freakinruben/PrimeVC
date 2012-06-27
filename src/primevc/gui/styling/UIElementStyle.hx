@@ -628,7 +628,7 @@ class UIElementStyle implements IUIElementStyle
 			var styleCell:FastDoubleCell<StyleBlock> = styles.getCellWithPriority( priority );
 			while (null != styleCell && newStyles.length > 0)
 			{
-				var style = styleCell.data;
+				var style = styleCell.data; //.as(StyleBlock);	//weird casting bug.. only appears without DCE
 				var next  = styleCell.next;
 				if (style.getPriority() != priority)
 					break;

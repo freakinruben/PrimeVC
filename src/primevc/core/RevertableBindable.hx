@@ -129,12 +129,12 @@ class RevertableBindable <DataType> extends Bindable<DataType>, implements IEdit
 	// FLAG METHODS
 	//
 	
-	public  inline function isEditable () : Bool			{ return  flags.has(   Flags.IN_EDITMODE); }
-	public  inline function dispatchBeforeCommit () : Void	{ flags = flags.set(   Flags.DISPATCH_CHANGES_BEFORE_COMMIT );  }
-	public  inline function dispatchAfterCommit () : Void	{ flags = flags.unset( Flags.DISPATCH_CHANGES_BEFORE_COMMIT );  }
-	public  inline function updateBeforeCommit () : Void	{ flags = flags.set(   Flags.UPDATE_BINDINGS_BEFORE_COMMIT );  }
-	public  inline function updateAfterCommit () : Void		{ flags = flags.unset( Flags.UPDATE_BINDINGS_BEFORE_COMMIT );  }
-	public  inline function isChanged () : Bool 			{ return  flags.hasNone(Flags.MAKE_SHADOW_COPY ); }
+	@:keep public  inline function isEditable ()		return  flags.has(   Flags.IN_EDITMODE)
+	public  inline function dispatchBeforeCommit ()		flags = flags.set(   Flags.DISPATCH_CHANGES_BEFORE_COMMIT )
+	public  inline function dispatchAfterCommit ()		flags = flags.unset( Flags.DISPATCH_CHANGES_BEFORE_COMMIT )
+	public  inline function updateBeforeCommit ()		flags = flags.set(   Flags.UPDATE_BINDINGS_BEFORE_COMMIT )
+	public  inline function updateAfterCommit ()		flags = flags.unset( Flags.UPDATE_BINDINGS_BEFORE_COMMIT )
+	public  inline function isChanged () 				return  flags.hasNone(Flags.MAKE_SHADOW_COPY )
 
 
 
@@ -146,7 +146,7 @@ class RevertableBindable <DataType> extends Bindable<DataType>, implements IEdit
 	 * Puts this in editing-mode and keeps a copy of the current value
 	 * if not already in edit-mode.
 	 */
-	public inline function beginEdit()
+	@:keep public inline function beginEdit()
 	{
 		// Only set MAKE_SHADOW_COPY if IN_EDITMODE is not set
 		Assert.that(Flags.IN_EDITMODE << 11 == Flags.MAKE_SHADOW_COPY);

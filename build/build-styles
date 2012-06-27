@@ -34,11 +34,9 @@ StyleOutputFile="$StyleFolder/StyleSheet.hx"
 #ManifestFile="${StyleFolder}/manifest.xml"
 
 #echo "MainFile: ${MainFile}"
-echo -e "\tMain: $MainClass"
-echo -e "\tStyleInput: $StyleInputFile"
-echo -e "\tStyleOutput: $StyleOutputFile"
+#echo -e "\tMain: $MainClass"
 #echo "Manifest: $ManifestFile" &&
-echo -e "\tDebugging? ${Debug:-false}"
+#echo -e "\tDebugging? ${Debug:-false}"
 
 CompilerUpdated=false
 
@@ -63,6 +61,8 @@ fi;
 #compile css
 if [[ -d "$StyleFolder" ]] && [[ -f "$StyleInputFile" ]] ; then # && [[ -f ${ManifestFile} ]] ; then
 	if "$CompilerUpdated" || [[ ! -f "$StyleOutputFile" ]] || test "$StyleInputFile" -nt "$StyleOutputFile" || test "$Parser" -nt "$StyleOutputFile"; then # || test ${ManifestFile} -nt ${StyleOutputFile} ; then
+		echo -e "\tStyleInput: $StyleInputFile"
+		echo -e "\tStyleOutput: $StyleOutputFile"
 		echo -e "\tRunning parser on ${StyleInputFile}"
 		node "$Parser" "$StyleFolder" "$PRIMEVC_ROOT" || exit 1;
 	else	
