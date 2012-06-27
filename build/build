@@ -120,8 +120,8 @@ else
 #	echo -e "\n=== BUILDING STYLES ==="
 	bash build/build-styles -s "${STYLEDIR}" ${Force:+-f} || exit 1;
 
-	if [[ -f $OUTPUT ]] ; then
-		OLDSIZE=`wc -c < $OUTPUT`
+	if [[ -f "$OUTPUT" ]] ; then
+		OLDSIZE=`wc -c < "$OUTPUT"`
 	else
 		OLDSIZE=0
 	fi;
@@ -133,12 +133,13 @@ else
 		 --dead-code-elimination \
 		${Debug:---no-traces} \
 		$EXTRA \
-		-cp "'$PRJROOT/src'" \
+		--cwd "'$PRJROOT'" \
+		-cp "'${PRIMEVC_ROOT}/src'" \
 		-cp "'$STYLEDIR'" \
 		-main $MainClass \
 		-swf-header $WIDTH:$HEIGHT:$FPS:$BGCOLOR \
 		${ASSETS:+-swf-lib "'$ASSETS'"} \
-		-swf-lib "'assets/${Debug:+debug-}assets.swf'" \
+		-swf-lib "'${PRIMEVC_ROOT}/assets/${Debug:+debug-}assets.swf'" \
 		${ACCESS:--D local} \
 		${PROFILING:+-swf-lib "'$PRJROOT/bin-debug/swf/FlashPreloadProfiler_RC2.swf'" -D profiling} \
 		$CONSOLE \
@@ -156,7 +157,7 @@ else
 #		open "$OUTPUT"
 #	fi;
 
-	NEWSIZE=`wc -c < $OUTPUT`
+	NEWSIZE=`wc -c < "$OUTPUT"`
 	echo -e "\t\tOld size: ${OLDSIZE} bytes"
 	echo -e "\t\tNew size: ${NEWSIZE} bytes"
 	echo -e "\t\t--------------------"
