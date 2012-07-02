@@ -108,6 +108,8 @@ class VideoStream extends BaseMediaStream
 		handleIOError		.on( source.events.ioError, 			this );
 		handleNetStatus		.on( source.events.netStatus, 			this );		
 #end
+        SoundMixer.add(this);
+        applyVolume.on(volume.change, this);
 	}
 	
 	
@@ -117,6 +119,7 @@ class VideoStream extends BaseMediaStream
 			return;					// <-- is already disposed
 		
 		stop();
+        SoundMixer.remove(this);
 		
 #if flash9
 	//	source.client = null;		//gives error "Invalid parameter flash.net::NetStream/set client()"
@@ -269,22 +272,15 @@ class VideoStream extends BaseMediaStream
 	 * make sure the value is 0 => value >= 1.
 	 * The method will also apply the new volume-level on the video-stream.
 	 */
-	private function changeVolume (newValue:Float, oldValue:Float)
+	private function applyVolume ()
 	{
-		newValue = newValue.within( 0, 1 );
-        if (newValue != volume.value || oldValue == newValue) {
-            volume.value = newValue;
-            return;
-        }
-
+		Assert.that(volume.value.isWithin(0,1));
 #if flash9
 		Assert.notNull(source);
-		if (source.soundTransform != null && source.soundTransform.volume != newValue)
-		{
-			var sound				= source.soundTransform;
-			sound.volume			= newValue;
-			source.soundTransform	= sound;
-		}
+		Assert.notNull(source.soundTransform);
+		var sound				= source.soundTransform;
+		sound.volume			= volume.value; // * flash.media.SoundMixer.soundTransform.volume;
+		source.soundTransform	= sound;
 #end
 	}
 	
