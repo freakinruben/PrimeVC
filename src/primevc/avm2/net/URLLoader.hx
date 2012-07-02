@@ -136,10 +136,10 @@ class URLLoader implements ICommunicator
 		bytesProgress	= bytesTotal = Number.INT_NOT_SET;
 		events			= new LoaderEvents(this.loader);
 		
-		setStarted		.on( events.load.started, 	 this );
-		setFinished		.on( events.load.completed,  this );
-		unsetStarted	.on( events.load.error, 	 this );
-		unsetStarted	.on( events.unloaded,		 this );
+		setStarted	.on( events.load.started, 	 this );
+		setFinished	.on( events.load.completed,  this );
+		unsetStarted.on( events.load.error, 	 this );
+		unsetStarted.on( events.unloaded,		 this );
 		
 //#if debug	trackError.on( events.load.error, this ); #end
 //#if debug	trackHttpStatus.on( events.httpStatus, this ); #end		
