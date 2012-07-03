@@ -1,10 +1,12 @@
 package primevc.locale;
 
+
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.xml.Fast;
 import primevc.utils.FastArray;
 import primevc.utils.MacroUtils;
+
 
 
 using primevc.utils.StringUtil;
@@ -33,42 +35,69 @@ class LangMacro
 		var fields = haxe.macro.Context.getBuildFields();
 		
 		var langsRaw = new Hash<YamlHX>();
-		for ( file in config)
-		{
-			var data = YamlHX.read( neko.io.File.getContent(file) );
-			var key = data.x.firstElement().nodeName;
-			if ( langsRaw.exists(key))
-			{
+		//for ( file in config)
+		//{
+			//var data = YamlHX.read( neko.io.File.getContent(file) );
+			//var key = data.x.firstElement().nodeName;
+			//if ( langsRaw.exists(key))
+			//{
 				//merge
-				 var xmlToPush = langsRaw.get(key);
-				 var xml = xmlToPush.x.firstElement();
-				 for (el in data.x.firstElement().array())
-				 {
+				 //var xmlToPush = langsRaw.get(key);
+				 //var xml = xmlToPush.x.firstElement();
+				 //for (el in data.x.firstElement().array())
+				 //{
 					 //trace(el);
-					 xml.addChild(el);
-				 }
-				langsRaw.set(key , xmlToPush);
-				
+					 //xml.addChild(el);
+				 //}
+				//langsRaw.set(key , xmlToPush);
+				//
 				//trace(xmlToPush.x.toString());
-				
-			}
-			else
-			{
-				langsRaw.set(key , data);
-			}
+				//
+			//}
+			//else
+			//{
+				//langsRaw.set(key , data);
+			//}
+		//}
+
+	for ( dir in Context.getClassPath() )
+		{
+			var currentDir =  dir;
+	
+				for (file in  neko.FileSystem.readDirectory(currentDir) )
+				{
+					if (file.endsWith(".yaml") || file.endsWith(".yml") )
+					{
+						trace("Prime::Locale:: Parsing YAML file:: " + currentDir +  file);
+						haxe.macro.Context.registerModuleDependency("primevc.locale.LangMacro", currentDir + "/" + file);
+						var yamlStream = YamlHX.read( neko.io.File.getContent( currentDir + "/" + file) );
+						var key = yamlStream.x.firstElement().nodeName;
+						if ( langsRaw.exists(key))
+						{
+							//merge
+							 var xmlToMerge = langsRaw.get(key);
+							 //xmlToPush.x.firstElement();
+							 mergeXML(xmlToMerge.node.resolve(key), yamlStream.node.resolve(key));
+
+							langsRaw.set(key , xmlToMerge);
+							//neko.io.File.saveContent("test.xml", xmlToMerge.x.toString());
+						}
+						else
+						{
+							langsRaw.set(key , yamlStream);
+						}
+					}
+				}
 		}
 
-	
 		if (langsRaw.empty())
 		{
 			Context.error("There are no .yaml files", pos);
 		}
-		
 		var t = { pack:[], pos:pos, meta:[], params:[], isExtern:false, kind:TDClass(), name:"LangManBindables", fields:[] };
 		var constructorWords = "";
 		
 		var ILangInterfaceType = { pack:"primevc.locale".split("."), pos:pos, meta:[], params:[], isExtern:false, kind:TDClass(null,null,true), name:"ILang", fields:[] };
-
 		var list = [];
 		for (yaml in langsRaw) 
 		{
@@ -78,7 +107,6 @@ class LangMacro
 				list = list.concat ( traverseXMLInterface(lang, ILangInterfaceType.fields) );
 			}
 		}
-		
 		var errorList = [];
 		for (yaml in langsRaw) 
 		{
@@ -98,7 +126,7 @@ class LangMacro
 				}
 			}
 		}
-		
+
 		if (errorList.length > 0)
 		{
 			Context.error( errorList.join("\n" ), pos );
@@ -109,14 +137,13 @@ class LangMacro
 		
 		constructorWords = traverseXMLLangManBind( new Fast(defaultLang.x.firstElement()), t);
 		
-		
 		t.fields.push( { meta:[], name:"new", doc:null, access:[APublic], kind:FFun( { args:[], ret:null, expr:Context.parse("{" + constructorWords + "}", pos), params:[] } ), pos:pos } );
 		
 		Context.defineType(ILangInterfaceType);
 		Context.defineType(t);
 		
 		//build types
-		
+
 		for (yaml in langsRaw) // for yamls in yamls array
 		{
 			for (node in yaml.elements) //for each language in each yaml
@@ -126,6 +153,7 @@ class LangMacro
 				  fields:[ ], pack: ["langMan"],  pos:pos, 	meta:[], params:[],	 isExtern:false //added langMan in pack,else Ill get TypeError: Error #1064: 
 				};
 				
+
 				var constructorWords = "";
 				var exprUpdateValues:String = "";
 				var previousWordName:String = "";
@@ -137,10 +165,10 @@ class LangMacro
 				
 				//add consturctor to Languages classses
 				t.fields.push( { meta:[], name:"new", doc:null, access:[APublic], kind:FFun( { args:[], ret:null, expr:Context.parse("{"+ constructorWords + "}", pos), params:[] } ), pos:pos } );
-				
+
 				//create class named Language implementing ILang
 				Context.defineType(t);
-				
+
 				var cultureClassName = "thx.cultures." + node.name.capitalizeFirstLetter();
 				
 				try
@@ -161,6 +189,7 @@ class LangMacro
 			}
 		}
 	
+
 		return fields;
     }
 	
@@ -207,7 +236,8 @@ class LangMacro
 				
 				case node:
 				//type generated in BuildInterface Method
-				var tintStruct = TPath( { pack : [], name :el.name.capitalizeFirstLetter() + "struct" , params : [], sub : null } );
+				var prefix = generatePrefix(el.x);
+				var tintStruct = TPath( { pack : [], name :prefix + el.name.capitalizeFirstLetter() + "struct" , params : [], sub : null } );
 				typeDefinition.fields.push( { pos:Context.currentPos(), meta:[], name:el.name, doc:null, access:[APublic], kind:FVar(tintStruct) } );
 
 				consLines += el.name +" = {" + followAndFill(el, typeDefinition) + "}";
@@ -314,7 +344,7 @@ class LangMacro
 				}
 				
 				var expFunc = Context.parse("{return Strings.format(" + addSlashes(nodeParsedValue) + "," + varNames + ");}", Context.currentPos());
-				var prefix = el.x.parent != null? el.x.parent.nodeName :  "";
+				var prefix = generatePrefix(el.x);
 				typeDefinition.fields.push( { pos:Context.currentPos(), meta:[], name:prefix + el.name, doc:null, access:[APublic], kind:FFun(  { args:args, ret:MacroExprUtil.createTypePath("String"), expr:expFunc, params:[] } ) } );
 				consLines += el.name + ":this." + prefix + el.name  + ",";
 
@@ -404,6 +434,7 @@ class LangMacro
 			result.push( parent + (parent.length > 0?".":"") + el.name);
 			if (  MacroExprUtil.getField( fields, el.name) == null )
 			{
+				var prefix = generatePrefix(el.x);
 				switch(getElementType(el))
 				{
 					
@@ -416,7 +447,7 @@ class LangMacro
 
 					case node:
 					var t = { 
-					  kind:TDStructure, name: el.name.capitalizeFirstLetter() + "struct" ,
+					  kind:TDStructure, name: prefix + el.name.capitalizeFirstLetter() + "struct" ,
 					  fields:[ ], pack: [],  pos:Context.currentPos(), 	meta:[], params:[], isExtern:false
 					};
 					
@@ -463,6 +494,7 @@ class LangMacro
 		
 		for (el in xml.elements) 
 		{
+			var prefix = generatePrefix(el.x);
 			switch( getElementType(el))
 			{
 				case leaf:
@@ -476,7 +508,7 @@ class LangMacro
 				
 				case node:
 				var t = { 
-				kind:TDStructure, name: el.name.capitalizeFirstLetter() + "structBindable" ,
+				kind:TDStructure, name:prefix + el.name.capitalizeFirstLetter() + "structBindable" ,
 				fields:[ ], pack: [],  pos:Context.currentPos(), 	meta:[], params:[], isExtern:false
 				};
 
@@ -513,10 +545,44 @@ class LangMacro
 		}
 	}
 	
-
+	private static function mergeXML(existingXML:Fast,newDataXML:Fast)
+	{
+		for (existingElement in existingXML.elements)
+		{
+			for ( newElement in newDataXML.elements)
+			{
+				if ( existingElement.name == newElement.name)
+				{
+					mergeXML(existingElement, newElement);
+				}
+				else
+				{
+					if  ( existingXML.hasNode.resolve(newElement.name))
+					{
+						//TODO::
+					}
+					else
+					{
+						existingXML.x.addChild( newElement.x);
+					}
+				}
+			}
+		}
+	}
 	private static inline function addSlashes(s)
 	{
 		return '"' + s + '"';
+	}
+	private static function generatePrefix(x:Xml)
+	{
+		var item  = x;
+		var str = "";
+		while (item != null && item.parent != null && item.parent.parent.nodeType != Xml.Document)
+		{
+			str = item.nodeName + "_" + str ;
+			item = item.parent;
+		}
+		return  str;
 	}
 	
 
