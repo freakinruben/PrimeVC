@@ -27,19 +27,12 @@
  *  Ruben Weijers   <ruben @ onlinetouch.nl>
  */
 package primevc.gui.core;
- import primevc.core.dispatcher.Wire;
  import primevc.core.Bindable;
- 
- import primevc.gui.behaviours.layout.ValidateLayoutBehaviour;
  import primevc.gui.behaviours.BehaviourList;
  import primevc.gui.display.BitmapData;
- import primevc.gui.display.BitmapShape;
  import primevc.gui.display.IDisplayContainer;
- import primevc.gui.effects.UIElementEffects;
  import primevc.gui.layout.ILayoutContainer;
  import primevc.gui.layout.AdvancedLayoutClient;
- import primevc.gui.layout.LayoutClient;
- import primevc.gui.layout.LayoutFlags;
  import primevc.gui.managers.ISystem;
  import primevc.gui.states.UIElementStates;
 #if flash9
@@ -52,6 +45,7 @@ package primevc.gui.core;
   using primevc.gui.utils.UIElementActions;
   using primevc.utils.Bind;
   using primevc.utils.BitUtil;
+  using primevc.utils.NumberUtil;
   using primevc.utils.TypeUtil;
 
 
@@ -59,7 +53,7 @@ package primevc.gui.core;
  * @author Ruben Weijers
  * @creation-date Jul 08, 2011
  */
-class UIBitmap extends BitmapShape, implements IUIElement
+class UIBitmap extends primevc.gui.display.BitmapShape, implements IUIElement
 {
     public var prevValidatable  : IValidatable;
     public var nextValidatable  : IValidatable;
@@ -69,9 +63,9 @@ class UIBitmap extends BitmapShape, implements IUIElement
     public var behaviours       (default, null)                 : BehaviourList;
     public var id               (default, null)                 : Bindable < String >;
     public var state            (default, null)                 : UIElementStates;
-    public var effects          (default, default)              : UIElementEffects;
+    public var effects          (default, default)              : primevc.gui.effects.UIElementEffects;
     
-    public var layout           (default, null)                 : LayoutClient;
+    public var layout           (default, null)                 : primevc.gui.layout.LayoutClient;
     public var system           (getSystem, never)              : ISystem;
     
 #if flash9
@@ -101,7 +95,7 @@ class UIBitmap extends BitmapShape, implements IUIElement
 #end
         
         //add default behaviours
-        behaviours.add( new ValidateLayoutBehaviour(this) );
+        behaviours.add( new primevc.gui.behaviours.layout.ValidateLayoutBehaviour(this) );
         
         createBehaviours();
         if (layout == null)
@@ -176,7 +170,7 @@ class UIBitmap extends BitmapShape, implements IUIElement
 
     private function updateScale (changes:Int)
     {
-        if (changes.has(LayoutFlags.SIZE) && data != null)
+        if (changes.has(primevc.gui.layout.LayoutFlags.SIZE) && data != null)
         {
             // Adjust the scale of the Bitmap since it's not allowed to change the size of 
             // the bitmapdata.
@@ -268,7 +262,7 @@ class UIBitmap extends BitmapShape, implements IUIElement
     // IPROPERTY-VALIDATOR METHODS
     //
     
-    private var validateWire : Wire<Dynamic>;
+    private var validateWire : primevc.core.dispatcher.Wire<Dynamic>;
     
     public function invalidate (change:Int)
     {
@@ -332,11 +326,15 @@ class UIBitmap extends BitmapShape, implements IUIElement
 
             if (v != null)
             {
-                l.measuredWidth  = v.width;
-                l.measuredHeight = v.height;
+                l.maintainAspectRatio = true;
+                l.measuredResize(v.width, v.height);
+#if flash9      if (l.explicitWidth.isSet() || l.explicitHeight.isSet())
+                    scaleX = scaleY = Formulas.scale(v.width, v.height, l.explicitWidth, l.explicitHeight);
             }
             else
                 l.measuredWidth = l.measuredHeight = Number.INT_NOT_SET;
+
+#end
         }
         return v;
     }

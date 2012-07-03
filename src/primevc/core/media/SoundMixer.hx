@@ -32,6 +32,7 @@ package primevc.core.media;
  import flash.media.SoundTransform;
 #end
  import primevc.core.Bindable;
+  using primevc.utils.Bind;
   using primevc.utils.IfUtil;
   using primevc.utils.NumberUtil;
   using primevc.utils.TypeUtil;
@@ -129,6 +130,7 @@ private class SoundMixerInstance
         volume              = new Bindable<Float>(1.0);
         isMuted             = new Bindable<Bool>(false);
         numberOfFreezes     = 0;
+        applyVolume.on(isMuted.change, this);
     }
 
 
@@ -214,22 +216,8 @@ private class SoundMixerInstance
     }
 
 
-    public function mute ()
-    {
-        if (!isMuted.value) {
-            isMuted.value = true;
-            applyVolume();
-        }
-    }
-
-
-    public function unmute ()
-    {
-        if (isMuted.value) {
-            isMuted.value = false;
-            applyVolume();
-        }
-    }
+    public inline function mute ()     isMuted.value = true
+    public inline function unmute ()   isMuted.value = false
 
     
     /**
@@ -247,7 +235,7 @@ private class SoundMixerInstance
     {
 #if flash9
         var s    = Sound.soundTransform;
-        s.volume = isMuted.value.boolCalc() * volume.value;
+        s.volume = (!isMuted.value).boolCalc() * volume.value;
         Sound.soundTransform = s;
 #end
     }

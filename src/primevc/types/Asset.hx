@@ -618,7 +618,6 @@ class ExternalAsset extends BytesAssetBase
 				else
 					setLoadable();
 			}
-			
 		}
 		return v;
 	}
